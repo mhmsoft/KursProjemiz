@@ -1,0 +1,11 @@
+﻿@model IEnumerable<ET.Models.ViewModel.Product2Brand>
+
+<ul class="nav nav-pills nav-stacked">
+    @foreach (var item in Model)
+    {
+     <li><a href="@Url.Action("Products","Default",new {brandId=item.brandId })"> 
+     <span class="pull-right">(@item.Count)</span>@item.brandName</a></li>
+
+    }
+
+</ul>

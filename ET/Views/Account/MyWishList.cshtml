@@ -1,0 +1,88 @@
+﻿@model IEnumerable<ET.Models.ViewModel.MyWishList>
+@{
+    ViewBag.Title = "MyWishList";
+    Layout = "~/Views/Shared/_LayoutUserPage.cshtml";
+}
+
+<h2>MyWishList</h2>
+<section class="site-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8" style="border:1px solid #FE980F;    border-radius: 5px;">
+                <div class="form-wrap">
+                    <h2 class="mb-5" style="color:#FE980F">Personal info</h2>
+
+                    <table class="table table-striped">
+                        <tr>
+                            <th>
+                                @Html.Label("Resim")
+                            </th>
+                            <th>
+                                @Html.Label("Kategori")
+                            </th>
+                            <th>
+                                @Html.Label("Marka")
+                            </th>
+                            <th>
+                                @Html.Label("Ürün")
+                            </th>
+                            <th>
+                                @Html.Label("Fiyat")
+                            </th>
+
+                            <th></th>
+                        </tr>
+
+
+                        @foreach (var item in Model)
+                        {
+                            <tr id="tr_@item.Id">
+                                <td class="cart_product">
+                                    <a href="@Url.Action("ProductDetails","Default",new {productId=item.product.productId })"><img style="width:80px;height:90px;"
+                                   src="data:image/png;base64,@Convert.ToBase64String(item.product.images.FirstOrDefault(x=>x.isShow==true).imagepath)" alt=""></a>
+                                </td>
+                                <td>
+                                    <p>@item.product.category.categoryName</p>
+
+</td>
+                                <td>
+                                    <p>@item.product.brand.brandName</p>
+                                </td>
+                                <td>
+                                    <p>@item.product.productName</p>
+                                </td>
+
+                                <td>
+                                    <p class="cart_total_price">$@(item.product.price)</p>
+                                </td>
+                                <td class="cart_delete">
+                                    <a class="cart_quantity_delete" field="tr_@item.Id" data-id="@item.Id" href="javascript:void(0);"><i class="fa fa-times"></i></a>
+                                </td>
+                            </tr>
+                        }
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    // favori ürünü silme
+    $(document).on("click", ".cart_quantity_delete", function () {
+        var wishId = $(this).attr("data-id");
+        fieldName = $(this).attr('field');
+          $.ajax({
+              url: "@Url.Action("deleteWishList", "Account")",
+              data: { Id: wishId },
+            success: function (data) {
+                $('tr[id=' + fieldName + ']').fadeOut(300, function () {
+
+                    $(this).remove();
+
+                }); 
+            }
+          });
+    });
+</script>

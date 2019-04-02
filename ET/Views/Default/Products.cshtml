@@ -1,0 +1,75 @@
+﻿@model  PagedList.IPagedList<ET.Models.ViewModel.product2Image>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+@foreach (var item in Model)
+{
+    <div class="col-sm-4">
+        <div class="product-image-wrapper">
+            <div class="single-products">
+                <div class="productinfo text-center">
+                    <img src="data:image/png;base64,@Convert.ToBase64String(item.image.imagepath)" alt="" />
+                    <h2>$@item.products.price</h2>
+                    <p>@item.products.productName</p>
+                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                </div>
+                <div class="product-overlay">
+                    <div class="overlay-content">
+                        <h2>$@item.products.price</h2>
+                        <p>@item.products.productName</p>
+                        <a href="javascript:void(0);" data-id="@item.products.productId" id="addCart"  class="btn btn-default add-to-cart">
+                            <i class="fa fa-shopping-cart"></i>Add to cart
+                        </a>
+                        <a href="@Url.Action("ProductDetails","Default",new {productId=item.products.productId })" class="btn btn-default add-to-cart">
+                            <i class="fa fa-angle-down"></i>Detail
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="choose">
+                <ul class="nav nav-pills nav-justified">
+                    <li><a href="javascript:void(0);" data-id="@item.products.productId" 
+                           id="addWishList"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+<div style="margin:0 auto; width:500px;">
+    @Html.PagedListPager(Model, page => Url.Action("Products", new { page }))
+</div>
+<script type="text/javascript">
+    $(document).on("click", "#addWishList", function () {
+                                var productId = $(this).attr("data-id");
+                                //alert(productId);
+                                $.ajax({
+                                    url: "@Url.Action("addWishList", "Default")",
+                                    data: { productId: productId },
+                                    success: function (data) {
+                                        alert(data);
+                                    }
+                                });
+    });
+
+     $(document).on("click", "#addCart",function () {
+        var productId = $(this).attr("data-id");
+        alert(productId);
+                        $.ajax({
+                            url: '@Url.Action("AddCart","Default")',
+                            type:'post',
+                            data:{productId:productId,quantity:1},
+                            success:function(data){
+                                alert(data);
+                               // itemCount++;
+                               // $('#itemCount').html(itemCount).css('display', 'block');
+                            }
+                        });
+                    }); 
+
+    </script>
+
+

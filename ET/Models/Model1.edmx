@@ -1,0 +1,853 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MembershipModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="addressId" />
+          </Key>
+          <Property Name="addressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" />
+          <Property Name="addressName" Type="text" />
+          <Property Name="cityId" Type="int" />
+          <Property Name="districtId" Type="int" />
+        </EntityType>
+        <EntityType Name="brand">
+          <Key>
+            <PropertyRef Name="brandId" />
+          </Key>
+          <Property Name="brandId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="brandName" Type="varchar" MaxLength="50" />
+          <Property Name="brandDesc" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="categoryId" />
+          </Key>
+          <Property Name="categoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="categoryName" Type="varchar" MaxLength="50" />
+          <Property Name="categoryDesc" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="city">
+          <Key>
+            <PropertyRef Name="cityId" />
+          </Key>
+          <Property Name="cityId" Type="int" Nullable="false" />
+          <Property Name="cityName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="district">
+          <Key>
+            <PropertyRef Name="districtId" />
+          </Key>
+          <Property Name="districtId" Type="int" Nullable="false" />
+          <Property Name="cityId" Type="int" />
+          <Property Name="districtName" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="images">
+          <Key>
+            <PropertyRef Name="imageId" />
+          </Key>
+          <Property Name="imageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productId" Type="int" />
+          <Property Name="isShow" Type="bit" />
+          <Property Name="imagepath" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="member">
+          <Key>
+            <PropertyRef Name="memberId" />
+          </Key>
+          <Property Name="memberId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="40" />
+          <Property Name="FirstName" Type="varchar" MaxLength="40" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="passw" Type="varchar" MaxLength="255" />
+          <Property Name="isAdmin" Type="bit" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="productId" />
+          </Key>
+          <Property Name="productId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productName" Type="varchar" MaxLength="50" />
+          <Property Name="categoryId" Type="int" />
+          <Property Name="stock" Type="int" />
+          <Property Name="price" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="productDesc" Type="varchar" MaxLength="255" />
+          <Property Name="discount" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="image" Type="varchar" MaxLength="100" />
+          <Property Name="brandId" Type="int" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="roleId" />
+          </Key>
+          <Property Name="roleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="roleName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="rePassword" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="50" />
+          <Property Name="lastName" Type="varchar" MaxLength="50" />
+          <Property Name="phone" Type="varchar" MaxLength="15" />
+          <Property Name="addressId" Type="int" />
+          <Property Name="activationCode" Type="varchar" MaxLength="255" />
+          <Property Name="resetCode" Type="varchar" MaxLength="255" />
+          <Property Name="hostName" Type="varchar" MaxLength="100" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="loginAttempt" Type="int" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="loginTime" Type="datetime" />
+          <Property Name="isMailVerified" Type="bit" />
+          <Property Name="roleId" Type="int" />
+        </EntityType>
+        <EntityType Name="userToaddress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userId" Type="int" />
+          <Property Name="addressId" Type="int" />
+        </EntityType>
+        <EntityType Name="wishlist">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productId" Type="int" />
+          <Property Name="userId" Type="int" />
+        </EntityType>
+        <Association Name="FK__address__cityId__35BCFE0A">
+          <End Role="city" Type="Self.city" Multiplicity="0..1" />
+          <End Role="address" Type="Self.address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city">
+              <PropertyRef Name="cityId" />
+            </Principal>
+            <Dependent Role="address">
+              <PropertyRef Name="cityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__address__distric__36B12243">
+          <End Role="district" Type="Self.district" Multiplicity="0..1" />
+          <End Role="address" Type="Self.address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="district">
+              <PropertyRef Name="districtId" />
+            </Principal>
+            <Dependent Role="address">
+              <PropertyRef Name="districtId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__district__cityId__32E0915F">
+          <End Role="city" Type="Self.city" Multiplicity="0..1" />
+          <End Role="district" Type="Self.district" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city">
+              <PropertyRef Name="cityId" />
+            </Principal>
+            <Dependent Role="district">
+              <PropertyRef Name="cityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__images__productI__2A4B4B5E">
+          <End Role="product" Type="Self.product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="images" Type="Self.images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="productId" />
+            </Principal>
+            <Dependent Role="images">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__product__brandId__2E1BDC42">
+          <End Role="brand" Type="Self.brand" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="brand">
+              <PropertyRef Name="brandId" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="brandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__product__categor__267ABA7A">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="categoryId" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user__addressId__398D8EEE">
+          <End Role="address" Type="Self.address" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="address">
+              <PropertyRef Name="addressId" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="addressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user__roleId__3C69FB99">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="roleId" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="roleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__userToadd__addre__403A8C7D">
+          <End Role="address" Type="Self.address" Multiplicity="0..1" />
+          <End Role="userToaddress" Type="Self.userToaddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="address">
+              <PropertyRef Name="addressId" />
+            </Principal>
+            <Dependent Role="userToaddress">
+              <PropertyRef Name="addressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__userToadd__userI__3F466844">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="userToaddress" Type="Self.userToaddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="userToaddress">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__wishlist__produc__4316F928">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="wishlist" Type="Self.wishlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="productId" />
+            </Principal>
+            <Dependent Role="wishlist">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__wishlist__userId__440B1D61">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="wishlist" Type="Self.wishlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="wishlist">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MembershipModelStoreContainer">
+          <EntitySet Name="address" EntityType="Self.address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="brand" EntityType="Self.brand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="city" EntityType="Self.city" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="district" EntityType="Self.district" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="images" EntityType="Self.images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="member" EntityType="Self.member" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userToaddress" EntityType="Self.userToaddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="wishlist" EntityType="Self.wishlist" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__address__cityId__35BCFE0A" Association="Self.FK__address__cityId__35BCFE0A">
+            <End Role="city" EntitySet="city" />
+            <End Role="address" EntitySet="address" />
+          </AssociationSet>
+          <AssociationSet Name="FK__address__distric__36B12243" Association="Self.FK__address__distric__36B12243">
+            <End Role="district" EntitySet="district" />
+            <End Role="address" EntitySet="address" />
+          </AssociationSet>
+          <AssociationSet Name="FK__district__cityId__32E0915F" Association="Self.FK__district__cityId__32E0915F">
+            <End Role="city" EntitySet="city" />
+            <End Role="district" EntitySet="district" />
+          </AssociationSet>
+          <AssociationSet Name="FK__images__productI__2A4B4B5E" Association="Self.FK__images__productI__2A4B4B5E">
+            <End Role="product" EntitySet="product" />
+            <End Role="images" EntitySet="images" />
+          </AssociationSet>
+          <AssociationSet Name="FK__product__brandId__2E1BDC42" Association="Self.FK__product__brandId__2E1BDC42">
+            <End Role="brand" EntitySet="brand" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__product__categor__267ABA7A" Association="Self.FK__product__categor__267ABA7A">
+            <End Role="category" EntitySet="category" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user__addressId__398D8EEE" Association="Self.FK__user__addressId__398D8EEE">
+            <End Role="address" EntitySet="address" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user__roleId__3C69FB99" Association="Self.FK__user__roleId__3C69FB99">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="FK__userToadd__addre__403A8C7D" Association="Self.FK__userToadd__addre__403A8C7D">
+            <End Role="address" EntitySet="address" />
+            <End Role="userToaddress" EntitySet="userToaddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK__userToadd__userI__3F466844" Association="Self.FK__userToadd__userI__3F466844">
+            <End Role="user" EntitySet="user" />
+            <End Role="userToaddress" EntitySet="userToaddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK__wishlist__produc__4316F928" Association="Self.FK__wishlist__produc__4316F928">
+            <End Role="product" EntitySet="product" />
+            <End Role="wishlist" EntitySet="wishlist" />
+          </AssociationSet>
+          <AssociationSet Name="FK__wishlist__userId__440B1D61" Association="Self.FK__wishlist__userId__440B1D61">
+            <End Role="user" EntitySet="user" />
+            <End Role="wishlist" EntitySet="wishlist" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MembershipModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="brand">
+          <Key>
+            <PropertyRef Name="brandId" />
+          </Key>
+          <Property Name="brandId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="brandName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="brandDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="product" Relationship="Self.FK__product__brandId__2E1BDC42" FromRole="brand" ToRole="product" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="categoryId" />
+          </Key>
+          <Property Name="categoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="categoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="categoryDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="product" Relationship="Self.FK__product__categor__267ABA7A" FromRole="category" ToRole="product" />
+        </EntityType>
+        <EntityType Name="member">
+          <Key>
+            <PropertyRef Name="memberId" />
+          </Key>
+          <Property Name="memberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="passw" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="isAdmin" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="productId" />
+          </Key>
+          <Property Name="productId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="categoryId" Type="Int32" />
+          <Property Name="stock" Type="Int32" />
+          <Property Name="price" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="productDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="discount" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="brandId" Type="Int32" />
+          <NavigationProperty Name="brand" Relationship="Self.FK__product__brandId__2E1BDC42" FromRole="product" ToRole="brand" />
+          <NavigationProperty Name="category" Relationship="Self.FK__product__categor__267ABA7A" FromRole="product" ToRole="category" />
+          <NavigationProperty Name="images" Relationship="MembershipModel.FK__images__productI__2A4B4B5E" FromRole="product" ToRole="images" />
+          <NavigationProperty Name="wishlist" Relationship="MembershipModel.FK__wishlist__produc__4316F928" FromRole="product" ToRole="wishlist" />
+        </EntityType>
+        <Association Name="FK__product__brandId__2E1BDC42">
+          <End Role="brand" Type="Self.brand" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="brand">
+              <PropertyRef Name="brandId" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="brandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__product__categor__267ABA7A">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="categoryId" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MembershipEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="brand" EntityType="Self.brand" />
+          <EntitySet Name="category" EntityType="Self.category" />
+          <EntitySet Name="member" EntityType="Self.member" />
+          <EntitySet Name="product" EntityType="Self.product" />
+          <AssociationSet Name="FK__product__brandId__2E1BDC42" Association="Self.FK__product__brandId__2E1BDC42">
+            <End Role="brand" EntitySet="brand" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__product__categor__267ABA7A" Association="Self.FK__product__categor__267ABA7A">
+            <End Role="category" EntitySet="category" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <EntitySet Name="images" EntityType="MembershipModel.images" />
+          <AssociationSet Name="FK__images__productI__2A4B4B5E" Association="MembershipModel.FK__images__productI__2A4B4B5E">
+            <End Role="product" EntitySet="product" />
+            <End Role="images" EntitySet="images" />
+          </AssociationSet>
+          <EntitySet Name="address" EntityType="MembershipModel.address" />
+          <EntitySet Name="city" EntityType="MembershipModel.city" />
+          <EntitySet Name="district" EntityType="MembershipModel.district" />
+          <EntitySet Name="user" EntityType="MembershipModel.user" />
+          <AssociationSet Name="FK__address__cityId__35BCFE0A" Association="MembershipModel.FK__address__cityId__35BCFE0A">
+            <End Role="city" EntitySet="city" />
+            <End Role="address" EntitySet="address" />
+          </AssociationSet>
+          <AssociationSet Name="FK__address__distric__36B12243" Association="MembershipModel.FK__address__distric__36B12243">
+            <End Role="district" EntitySet="district" />
+            <End Role="address" EntitySet="address" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user__addressId__398D8EEE" Association="MembershipModel.FK__user__addressId__398D8EEE">
+            <End Role="address" EntitySet="address" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="FK__district__cityId__32E0915F" Association="MembershipModel.FK__district__cityId__32E0915F">
+            <End Role="city" EntitySet="city" />
+            <End Role="district" EntitySet="district" />
+          </AssociationSet>
+          <EntitySet Name="Role" EntityType="MembershipModel.Role" />
+          <AssociationSet Name="FK__user__roleId__3C69FB99" Association="MembershipModel.FK__user__roleId__3C69FB99">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <EntitySet Name="userToaddress" EntityType="MembershipModel.userToaddress" />
+          <AssociationSet Name="FK__userToadd__addre__403A8C7D" Association="MembershipModel.FK__userToadd__addre__403A8C7D">
+            <End Role="address" EntitySet="address" />
+            <End Role="userToaddress" EntitySet="userToaddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK__userToadd__userI__3F466844" Association="MembershipModel.FK__userToadd__userI__3F466844">
+            <End Role="user" EntitySet="user" />
+            <End Role="userToaddress" EntitySet="userToaddress" />
+          </AssociationSet>
+          <EntitySet Name="wishlist" EntityType="MembershipModel.wishlist" />
+          <AssociationSet Name="FK__wishlist__produc__4316F928" Association="MembershipModel.FK__wishlist__produc__4316F928">
+            <End Role="product" EntitySet="product" />
+            <End Role="wishlist" EntitySet="wishlist" />
+          </AssociationSet>
+          <AssociationSet Name="FK__wishlist__userId__440B1D61" Association="MembershipModel.FK__wishlist__userId__440B1D61">
+            <End Role="user" EntitySet="user" />
+            <End Role="wishlist" EntitySet="wishlist" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="images">
+          <Key>
+            <PropertyRef Name="imageId" />
+          </Key>
+          <Property Name="imageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productId" Type="Int32" />
+          <Property Name="isShow" Type="Boolean" />
+          <Property Name="imagepath" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="product" Relationship="MembershipModel.FK__images__productI__2A4B4B5E" FromRole="images" ToRole="product" />
+        </EntityType>
+        <Association Name="FK__images__productI__2A4B4B5E">
+          <End Type="MembershipModel.product" Role="product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MembershipModel.images" Role="images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="productId" />
+            </Principal>
+            <Dependent Role="images">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="addressId" />
+          </Key>
+          <Property Name="addressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="addressName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cityId" Type="Int32" />
+          <Property Name="districtId" Type="Int32" />
+          <NavigationProperty Name="city" Relationship="MembershipModel.FK__address__cityId__35BCFE0A" FromRole="address" ToRole="city" />
+          <NavigationProperty Name="district" Relationship="MembershipModel.FK__address__distric__36B12243" FromRole="address" ToRole="district" />
+          <NavigationProperty Name="user" Relationship="MembershipModel.FK__user__addressId__398D8EEE" FromRole="address" ToRole="user" />
+          <NavigationProperty Name="userToaddress" Relationship="MembershipModel.FK__userToadd__addre__403A8C7D" FromRole="address" ToRole="userToaddress" />
+        </EntityType>
+        <EntityType Name="city">
+          <Key>
+            <PropertyRef Name="cityId" />
+          </Key>
+          <Property Name="cityId" Type="Int32" Nullable="false" />
+          <Property Name="cityName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="address" Relationship="MembershipModel.FK__address__cityId__35BCFE0A" FromRole="city" ToRole="address" />
+          <NavigationProperty Name="district" Relationship="MembershipModel.FK__district__cityId__32E0915F" FromRole="city" ToRole="district" />
+        </EntityType>
+        <EntityType Name="district">
+          <Key>
+            <PropertyRef Name="districtId" />
+          </Key>
+          <Property Name="districtId" Type="Int32" Nullable="false" />
+          <Property Name="cityId" Type="Int32" />
+          <Property Name="districtName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="address" Relationship="MembershipModel.FK__address__distric__36B12243" FromRole="district" ToRole="address" />
+          <NavigationProperty Name="city" Relationship="MembershipModel.FK__district__cityId__32E0915F" FromRole="district" ToRole="city" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="rePassword" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="addressId" Type="Int32" />
+          <Property Name="activationCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="resetCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="hostName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="loginAttempt" Type="Int32" />
+          <Property Name="createdDate" Type="DateTime" Precision="3" />
+          <Property Name="loginTime" Type="DateTime" Precision="3" />
+          <Property Name="isMailVerified" Type="Boolean" />
+          <NavigationProperty Name="address" Relationship="MembershipModel.FK__user__addressId__398D8EEE" FromRole="user" ToRole="address" />
+          <Property Name="roleId" Type="Int32" />
+          <NavigationProperty Name="Role" Relationship="MembershipModel.FK__user__roleId__3C69FB99" FromRole="user" ToRole="Role" />
+          <NavigationProperty Name="userToaddress" Relationship="MembershipModel.FK__userToadd__userI__3F466844" FromRole="user" ToRole="userToaddress" />
+          <NavigationProperty Name="wishlist" Relationship="MembershipModel.FK__wishlist__userId__440B1D61" FromRole="user" ToRole="wishlist" />
+        </EntityType>
+        <Association Name="FK__address__cityId__35BCFE0A">
+          <End Type="MembershipModel.city" Role="city" Multiplicity="0..1" />
+          <End Type="MembershipModel.address" Role="address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city">
+              <PropertyRef Name="cityId" />
+            </Principal>
+            <Dependent Role="address">
+              <PropertyRef Name="cityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__address__distric__36B12243">
+          <End Type="MembershipModel.district" Role="district" Multiplicity="0..1" />
+          <End Type="MembershipModel.address" Role="address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="district">
+              <PropertyRef Name="districtId" />
+            </Principal>
+            <Dependent Role="address">
+              <PropertyRef Name="districtId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user__addressId__398D8EEE">
+          <End Type="MembershipModel.address" Role="address" Multiplicity="0..1" />
+          <End Type="MembershipModel.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="address">
+              <PropertyRef Name="addressId" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="addressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__district__cityId__32E0915F">
+          <End Type="MembershipModel.city" Role="city" Multiplicity="0..1" />
+          <End Type="MembershipModel.district" Role="district" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city">
+              <PropertyRef Name="cityId" />
+            </Principal>
+            <Dependent Role="district">
+              <PropertyRef Name="cityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="roleId" />
+          </Key>
+          <Property Name="roleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="roleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="user" Relationship="MembershipModel.FK__user__roleId__3C69FB99" FromRole="Role" ToRole="user" />
+        </EntityType>
+        <Association Name="FK__user__roleId__3C69FB99">
+          <End Type="MembershipModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="MembershipModel.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="roleId" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="roleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="userToaddress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="addressId" Type="Int32" />
+          <NavigationProperty Name="address" Relationship="MembershipModel.FK__userToadd__addre__403A8C7D" FromRole="userToaddress" ToRole="address" />
+          <NavigationProperty Name="user" Relationship="MembershipModel.FK__userToadd__userI__3F466844" FromRole="userToaddress" ToRole="user" />
+        </EntityType>
+        <Association Name="FK__userToadd__addre__403A8C7D">
+          <End Type="MembershipModel.address" Role="address" Multiplicity="0..1" />
+          <End Type="MembershipModel.userToaddress" Role="userToaddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="address">
+              <PropertyRef Name="addressId" />
+            </Principal>
+            <Dependent Role="userToaddress">
+              <PropertyRef Name="addressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__userToadd__userI__3F466844">
+          <End Type="MembershipModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="MembershipModel.userToaddress" Role="userToaddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="userToaddress">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="wishlist">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productId" Type="Int32" />
+          <Property Name="userId" Type="Int32" />
+          <NavigationProperty Name="product" Relationship="MembershipModel.FK__wishlist__produc__4316F928" FromRole="wishlist" ToRole="product" />
+          <NavigationProperty Name="user" Relationship="MembershipModel.FK__wishlist__userId__440B1D61" FromRole="wishlist" ToRole="user" />
+        </EntityType>
+        <Association Name="FK__wishlist__produc__4316F928">
+          <End Type="MembershipModel.product" Role="product" Multiplicity="0..1" />
+          <End Type="MembershipModel.wishlist" Role="wishlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="productId" />
+            </Principal>
+            <Dependent Role="wishlist">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__wishlist__userId__440B1D61">
+          <End Type="MembershipModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="MembershipModel.wishlist" Role="wishlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="wishlist">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MembershipModelStoreContainer" CdmEntityContainer="MembershipEntities">
+          <EntitySetMapping Name="brand">
+            <EntityTypeMapping TypeName="MembershipModel.brand">
+              <MappingFragment StoreEntitySet="brand">
+                <ScalarProperty Name="brandId" ColumnName="brandId" />
+                <ScalarProperty Name="brandName" ColumnName="brandName" />
+                <ScalarProperty Name="brandDesc" ColumnName="brandDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="category">
+            <EntityTypeMapping TypeName="MembershipModel.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+                <ScalarProperty Name="categoryName" ColumnName="categoryName" />
+                <ScalarProperty Name="categoryDesc" ColumnName="categoryDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="member">
+            <EntityTypeMapping TypeName="MembershipModel.member">
+              <MappingFragment StoreEntitySet="member">
+                <ScalarProperty Name="memberId" ColumnName="memberId" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="passw" ColumnName="passw" />
+                <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product">
+            <EntityTypeMapping TypeName="MembershipModel.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="productDesc" ColumnName="productDesc" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="brandId" ColumnName="brandId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="images">
+            <EntityTypeMapping TypeName="MembershipModel.images">
+              <MappingFragment StoreEntitySet="images">
+                <ScalarProperty Name="imagepath" ColumnName="imagepath" />
+                <ScalarProperty Name="isShow" ColumnName="isShow" />
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="imageId" ColumnName="imageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="address">
+            <EntityTypeMapping TypeName="MembershipModel.address">
+              <MappingFragment StoreEntitySet="address">
+                <ScalarProperty Name="districtId" ColumnName="districtId" />
+                <ScalarProperty Name="cityId" ColumnName="cityId" />
+                <ScalarProperty Name="addressName" ColumnName="addressName" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="addressId" ColumnName="addressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="city">
+            <EntityTypeMapping TypeName="MembershipModel.city">
+              <MappingFragment StoreEntitySet="city">
+                <ScalarProperty Name="cityName" ColumnName="cityName" />
+                <ScalarProperty Name="cityId" ColumnName="cityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="district">
+            <EntityTypeMapping TypeName="MembershipModel.district">
+              <MappingFragment StoreEntitySet="district">
+                <ScalarProperty Name="districtName" ColumnName="districtName" />
+                <ScalarProperty Name="cityId" ColumnName="cityId" />
+                <ScalarProperty Name="districtId" ColumnName="districtId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="MembershipModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+                <ScalarProperty Name="isMailVerified" ColumnName="isMailVerified" />
+                <ScalarProperty Name="loginTime" ColumnName="loginTime" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="loginAttempt" ColumnName="loginAttempt" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="hostName" ColumnName="hostName" />
+                <ScalarProperty Name="resetCode" ColumnName="resetCode" />
+                <ScalarProperty Name="activationCode" ColumnName="activationCode" />
+                <ScalarProperty Name="addressId" ColumnName="addressId" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="rePassword" ColumnName="rePassword" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="MembershipModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="roleName" ColumnName="roleName" />
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userToaddress">
+            <EntityTypeMapping TypeName="MembershipModel.userToaddress">
+              <MappingFragment StoreEntitySet="userToaddress">
+                <ScalarProperty Name="addressId" ColumnName="addressId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="wishlist">
+            <EntityTypeMapping TypeName="MembershipModel.wishlist">
+              <MappingFragment StoreEntitySet="wishlist">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

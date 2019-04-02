@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "VerifyAccount";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<section class="site-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <h3>Account Activation</h3>
+                @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <div class="alert alert-success">
+                                <strong>Tebrikler!</strong> Hesabınız başarıyla aktive edilmiştir.<br />
+                                Giriş yapmak için  @Html.ActionLink("Login", "Login", "User")
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <div class="alert alert-danger">
+                                <strong>Hata!</strong> @ViewBag.Message
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

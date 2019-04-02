@@ -1,0 +1,33 @@
+﻿@model IEnumerable<EF.Models.image>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.imagepath)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+           <img src="~/Content/uploads/@item.imagepath" style="width:300px;height:220px;")
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.imageId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.imageId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.imageId })
+        </td>
+    </tr>
+}
+
+</table>

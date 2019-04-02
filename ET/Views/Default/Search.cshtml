@@ -1,0 +1,19 @@
+﻿<div class="search_box pull-right">
+    @using (Html.BeginForm("Products", "Default", FormMethod.Get, new { @id = "myform" }))
+    {
+
+        <input type="text" placeholder="Search" id="searchValue" name="searchValue" />
+    }
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#search").keydown(function (e) {
+            if (e.keyCode == 13) {
+                $("#myform").submit();
+            }
+        });
+    });
+
+</script>

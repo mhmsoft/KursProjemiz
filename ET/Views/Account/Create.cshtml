@@ -1,0 +1,110 @@
+﻿<!--deneme-->
+@model ET.Models.ViewModel.Account.UserAddress
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutUserPage.cshtml";
+}
+
+<section class="site-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7" style="border:1px solid #FE980F;    border-radius: 5px;">
+                <div class="form-wrap">
+                    <h2 class="mb-5" style="color:#FE980F">create personel Info</h2>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.Label("first Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.user.firstName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.user.firstName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("last Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.user.lastName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.user.lastName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.user.phone, new { htmlAttributes = new { @class = "form-control", placeholder = "phone" } })
+                                    @Html.ValidationMessageFor(model => model.user.phone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Adres tipi", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.RadioButtonFor(model => model.address.title, "Ev", new { htmlAttributes = new { @class = "form-control" } })
+                                    Ev
+                                    @Html.RadioButtonFor(model => model.address.title, "iş", new { htmlAttributes = new { @class = "form-control" } })
+                                    iş
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.address.addressName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.address.addressName, new { htmlAttributes = new { @class = "form-control", placeholder = "address" } })
+                                    @Html.ValidationMessageFor(model => model.address.addressName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("İl", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.address.cityId, new SelectList(ViewBag.cities, "cityId", "cityName"), "Select a city", htmlAttributes: new { @class = "form-control", id = "cityDropDown" })
+                                    @Html.ValidationMessageFor(model => model.address.cityId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("İlçe", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.address.districtId, new SelectList(Enumerable.Empty<SelectListItem>(), "districtId", "districtName"), "Select a district", htmlAttributes: new { @class = "form-control", id = "districtDropDown" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Create" class="btn btn-primary  px-5 py-2 " />
+                                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary  px-5 py-2" })
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#cityDropDown").change(function () {
+            var cityId = $('#cityDropDown option:selected').val();
+            var select = $("#districtDropDown");
+            //alert(cityId);
+            $.ajax({
+                url: "/Account/getDistricts",
+                data: { cityId: cityId },
+                success: function (data) {
+                    select.empty();
+                    $.each(data, function (i, district) {
+                        //alert(JSON.stringify(data));
+                        select.append(
+                            $('<option></option>').val(district.districtId).html(district.districtName)
+                        );
+                    });
+                }
+            });
+        });
+    });
+
+</script>

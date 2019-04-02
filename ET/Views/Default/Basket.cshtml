@@ -1,0 +1,171 @@
+﻿@using ET.Models.ViewModel
+@{
+    ViewBag.Title = "Basket";
+    Layout = "~/Views/Shared/_LayoutShop.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        // delete
+        $("#basket-table tr td").on("click", "a.cart_quantity_delete", function () {
+            fieldName = $(this).attr('field');
+                                            $.ajax({
+                                                type:'post',
+                                                url:'@Url.Action("Remove")',
+                                                data:{productId:$(this).attr("data-id")},
+                                                success:function(data)
+                                                {
+                                                    $('tr[id=' + fieldName + ']').fadeOut(300, function () {
+
+                                                        $(this).remove();
+
+                                                    });
+                                                }
+                                            });
+                                        });
+
+
+        $("#basket-table tr td").on("click", "a#plus", function () {
+            fieldName = $(this).attr('field');
+           // alert(fieldName);
+            var value = parseInt($('input[id='+fieldName+']').val());
+                                        value++;
+                                        $('input[id='+fieldName+']').val(value);
+                                        var price = parseInt(document.getElementById("price").innerHTML);
+                                         document.getElementById("total").innerHTML = "$"+(price * value).toFixed(2);
+
+                                       // alert(price);
+                                    });
+        $("#basket-table tr td").on("click", "a#minus", function () {
+            fieldName = $(this).attr('field');
+            var value = parseInt($('input[id=' + fieldName + ']').val());
+                                        if(value!=0)
+                                        value--;
+                                        $('input[id=' + fieldName + ']').val(value);
+
+                                        var price = parseInt(document.getElementById("price").innerHTML);
+                                        document.getElementById("total").innerHTML = "$" + (price * value).toFixed(2);
+
+                                    });
+                                });
+
+
+
+</script>
+<section id="cart_items">
+    <div class="container">
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li class="active">Shopping Cart</li>
+            </ol>
+        </div>
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed" id="basket-table">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Item</td>
+                        <td class="description"></td>
+                        <td class="price">Price</td>
+                        <td class="quantity">Quantity</td>
+                        <td class="total">Total</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Session["card"] != null)
+                    {
+                        foreach (BasketItem item in (List<BasketItem>)Session["card"])
+                        {
+                            <tr id="tr_@item.product.productId">
+                                <td class="cart_product">
+                                    <a href=""><img style="width:80px;height:90px;" src="data:image/png;base64,@Convert.ToBase64String(item.img.imagepath)" alt=""></a>
+                                </td>
+                                <td class="cart_description">
+                                    <h4><a href="">@item.product.productName</a></h4>
+                                    <p>Web ID: 1089772</p>
+                                </td>
+                                <td class="cart_price">
+                                    <p id="price">$@item.product.price</p>
+                                </td>
+                                <td class="cart_quantity">
+                                    <div class="cart_quantity_button">
+                                        <a class="cart_quantity_up" field="quantity_@item.Id" id="plus" href="javascript:void(0);"> + </a>
+                                        <input class="cart_quantity_input" type="text" id="quantity_@item.Id" name="quantity[]" value="@item.quantity" autocomplete="off" size="2">
+                                        <a class="cart_quantity_down" field="quantity_@item.Id" id="minus" href="javascript:void(0);"> - </a>
+                                    </div>
+                                </td>
+
+                                <td class="cart_total">
+                                    <p class="cart_total_price" id="total">$@(item.product.price * item.quantity)</p>
+                                </td>
+                                <td class="cart_delete">
+                                    <a class="cart_quantity_delete" field="tr_@item.product.productId" data-id="@item.product.productId" href="javascript:void(0);"><i class="fa fa-times"></i></a>
+                                </td>
+                            </tr>
+                        }
+
+                    }
+                    else
+                    {
+                        <tr><td>Basket is empty</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section> <!--/#cart_items-->
+<section id="do_action">
+    <div class="container">
+        <div class="heading">
+            <h3>What would you like to do next?</h3>
+            <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="chose_area">
+                    <ul class="user_option">
+                        <li>
+                            <input type="checkbox">
+                            <label>Use Coupon Code</label>
+                        </li>
+                        <li>
+                            <input type="checkbox">
+                            <label>Use Gift Voucher</label>
+                        </li>
+                        <li>
+                            <input type="checkbox">
+                            <label>Estimate Shipping & Taxes</label>
+                        </li>
+                    </ul>
+
+                    <a class="btn btn-default update" href="">Get Quotes</a>
+                    <a class="btn btn-default check_out" href="">Continue</a>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="total_area">
+                    <ul>
+                        <li>
+                            Cart Sub Total <span>
+                                $
+                                @if (Session["card"] != null)
+                                {
+
+                                    List<BasketItem> card = (List<BasketItem>)Session["card"];
+                                    var total = card.Sum(item => item.product.price * item.quantity);
+
+                                    @total
+                                }
+                            </span>
+                        </li>
+                        <li>Eco Tax <span>$2</span></li>
+                        <li>Shipping Cost <span>Free</span></li>
+                        <li>Total <span>$61</span></li>
+                    </ul>
+                    <a class="btn btn-default update" href="">Update</a>
+                    <a class="btn btn-default check_out" href="">Check Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--/#do_action-->

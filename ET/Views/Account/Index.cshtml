@@ -1,0 +1,81 @@
+﻿@model IEnumerable<ET.Models.ViewModel.Account.UserAddress>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUserPage.cshtml";
+}
+
+<section class="site-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8" style="border:1px solid #FE980F;    border-radius: 5px;">
+                <div class="form-wrap">
+                    <h2 class="mb-5" style="color:#FE980F">Personal info</h2>
+                    <p>
+                        @Html.ActionLink("Create New", "Create")
+                    </p>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>
+                                @Html.Label("First Name")
+                            </th>
+                            <th>
+                                @Html.Label("Last Name")
+                            </th>
+                            <th>
+                                @Html.Label("Phone")
+                            </th>
+                            <th>
+                                @Html.Label("Title")
+                            </th>
+                            <th>
+                                @Html.Label("Address")
+                            </th>
+                            <th>
+                                @Html.Label("District")
+                            </th>
+                            <th>
+                                @Html.Label("City")
+                            </th>
+
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.user.firstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.user.lastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.user.phone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.address.title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.address.addressName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.address.district.districtName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.address.city.cityName)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                               
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            </td>
+                        </tr>
+                        }
+
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
