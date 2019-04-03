@@ -207,6 +207,42 @@ namespace ET.Controllers
             }
             return RedirectToAction("Login", "User");
         }
+        public string deleteMyOrder(int Id)
+        {
+            orderDetails deletedorder = db.orderDetails.Where(x => x.Id == Id).SingleOrDefault();
+            db.orderDetails.Remove(deletedorder);
+            db.SaveChanges();
+           /* orders deleteorder = db.orders.Where(x=>x.orderId==deletedorder.orderId).SingleOrDefault();
+            db.orders.Remove(deleteorder);
+            db.SaveChanges();*/
+            return "silindi";
+        }
+        public ActionResult MyOrders()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                string userName = User.Identity.Name;
+                var availableUser = db.user.Where(x => x.Email == userName).FirstOrDefault();
+             
+
+                var model = from u in db.user join o in db.orders on u.userId equals o.customerId join od in db.orderDetails on o.orderId equals od.orderId join p in db.product on od.productId equals p.productId where u.userId ==availableUser.userId select new orderDetail
+                {
+
+                    Id = od.Id,
+                    product = p,
+                    quantity = od.quantity ?? 1,
+                    orderId = od.orderId ?? 1,
+
+
+                };
+
+                return View(model);
+
+            }
+
+            return RedirectToAction("Login", "User");
+           
+        }
 
         public JsonResult getDistricts(int cityId)
         {

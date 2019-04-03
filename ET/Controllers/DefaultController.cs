@@ -7,7 +7,10 @@ using ET.Models;
 using ET.Models.ViewModel;
 using PagedList;
 using ET.Models.ViewModel.Account;
-
+using System.Net.Configuration;
+using System.Configuration;
+using System.Net.Mail;
+using System.Net;
 
 namespace ET.Controllers
 {
@@ -26,15 +29,16 @@ namespace ET.Controllers
         public PartialViewResult brands()
         {
 
-            var query =from p in db.product join b in db.brand
-                       on p.brandId equals b.brandId
-                       group new { b, p } by new { b.brandName,b.brandId } into g
-                       select new Product2Brand
-                       {
-                           brandId = g.Key.brandId,
-                           brandName = g.Key.brandName,
-                           Count = g.Select(m =>         m.p.productId).Distinct().Count()
-                       };
+            var query = from p in db.product
+                        join b in db.brand
+   on p.brandId equals b.brandId
+                        group new { b, p } by new { b.brandName, b.brandId } into g
+                        select new Product2Brand
+                        {
+                            brandId = g.Key.brandId,
+                            brandName = g.Key.brandName,
+                            Count = g.Select(m => m.p.productId).Distinct().Count()
+                        };
 
             return PartialView(query);
         }
@@ -43,13 +47,13 @@ namespace ET.Controllers
             return PartialView();
         }
 
-        public ActionResult Products(int?categoryId,int?brandid,string searchValue,int?page)
+        public ActionResult Products(int? categoryId, int? brandid, string searchValue, int? page)
         {
             int pageSize = 3;
             // page boş değilse kendisi değilse default 1 olsun
             int pageNumber = (page ?? 1);
 
-            if (searchValue!=null)
+            if (searchValue != null)
             {
                 var query = from p in db.product
                             join i in db.images
@@ -61,16 +65,16 @@ namespace ET.Controllers
                                 products = p
 
                             };
-                query = query.Where(x => x.products.productName.Contains(searchValue) || x.products.brand.brandName.Contains(searchValue) || x.products.category.categoryName.Contains(searchValue)).OrderBy(x=>x.products.productName);
+                query = query.Where(x => x.products.productName.Contains(searchValue) || x.products.brand.brandName.Contains(searchValue) || x.products.category.categoryName.Contains(searchValue)).OrderBy(x => x.products.productName);
                 return View(query.ToPagedList(pageNumber, pageSize));
 
             }
-            if(categoryId!=null)
+            if (categoryId != null)
             {
-               var query = from p in db.product
+                var query = from p in db.product
                             join i in db.images
        on p.productId equals i.productId
-                            where (i.isShow == true && p.categoryId==categoryId)
+                            where (i.isShow == true && p.categoryId == categoryId)
                             select new product2Image
                             {
                                 image = i,
@@ -106,14 +110,14 @@ namespace ET.Controllers
                 return View(query.ToPagedList(pageNumber, pageSize));
             }
 
-            
+
         }
         [Authorize]
         public ActionResult ProductDetails(int productId)
         {
 
             string t = db.Database.SqlQuery<string>("Select brandName From brand b , product p  Where b.brandId=p.brandId and productId=" + productId).FirstOrDefault();
-            
+
             product2Image PIm = new product2Image()
             {
                 imageList = db.images.Where(x => x.productId == productId).ToList(),
@@ -128,13 +132,13 @@ namespace ET.Controllers
             var result = db.wishlist.FirstOrDefault(x => x.productId == productId);
             return result != null;
         }
-        
+
         public ActionResult addWishList(int productId)
         {
             if (!User.Identity.IsAuthenticated)
             {
 
-                return RedirectToAction("Login","User");
+                return RedirectToAction("Login", "User");
             }
 
             string username = User.Identity.Name;
@@ -150,7 +154,7 @@ namespace ET.Controllers
                 };
                 db.wishlist.Add(model);
                 db.SaveChanges();
-                return  Content("Eklendi.");
+                return Content("Eklendi.");
             }
             return Content("Eklenemedi.");
 
@@ -175,7 +179,7 @@ namespace ET.Controllers
             string message = "";
             product _product = db.product.FirstOrDefault(x => x.productId == productId);
             images _image = db.images.FirstOrDefault(x => x.productId == productId && x.isShow == true);
-          
+
             if (Session["card"] == null)
             {
                 List<BasketItem> Card = new List<BasketItem>();
@@ -199,7 +203,7 @@ namespace ET.Controllers
                 if (index != -1)
                 {
                     // sadece adedini gelen quantity kadar arttıracak.
-                    card[index].quantity+=quantity;
+                    card[index].quantity += quantity;
                 }
                 // sepette girilen ürün yoksa 
                 else
@@ -237,22 +241,22 @@ namespace ET.Controllers
         {
             return View();
         }
-        [Authorize(Roles ="User")]
+        [Authorize(Roles = "User")]
         public ActionResult CheckOut()
         {
             if (!User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Login", "User");
             }
-            user availableUser = db.user.Where(x=>x.Email==User.Identity.Name).FirstOrDefault();
+            user availableUser = db.user.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
 
             UserAddress model = new UserAddress()
             {
                 user = availableUser,
-                addressList = db.userToaddress.Where(x=>x.userId==availableUser.userId).ToList()
+                addressList = db.userToaddress.Where(x => x.userId == availableUser.userId).ToList()
             };
 
-           
+
             return View(model);
 
         }
@@ -264,10 +268,86 @@ namespace ET.Controllers
                 availableUser.addressId = addressId;
                 db.SaveChanges();
             }
-           
+
 
         }
+        public ActionResult completeCheckOut()
+        {
+            bool status = false;
+            string message = "";
+            if(!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            user availableUser = db.user.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
+            orders newOrder = new orders()
+            {
+                orderDate = DateTime.Now,
+                customerId = availableUser.userId
 
+            };
+            db.orders.Add(newOrder);
+            db.SaveChanges();
+
+            if (Session["card"] != null)
+            {
+                List<BasketItem> Basket = (List<BasketItem>)Session["card"];
+                orderDetails newOrderDetail = new orderDetails();
+                foreach (var item in Basket)
+                {
+                    newOrderDetail.orderId = newOrder.orderId;
+                    newOrderDetail.productId = item.product.productId;
+                    newOrderDetail.quantity = item.quantity;
+                   
+                    db.orderDetails.Add(newOrderDetail);
+                    db.SaveChanges();
+                }
+                // mail Gönderecek
+                SendOrderInfo(availableUser.Email);
+                message = " Sipariş işlemi tamamlandı. siparişiniz ile ilgili bilgi mailinize gönderilmiştir. <br/>" +
+                  "Ecommerce sayfanızda sipariş detaylarını görebilirisiniz. Detay için aşağıdaki linke tıklayınız" +
+                      " <br/><br/><a href='/Account/MyOrders'></a> ";
+
+            }
+            return Content(message);
+
+        }
+        [NonAction]
+        public void SendOrderInfo(string emailID)
+        {
+            SmtpSection network = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
+            try
+            {
+                var url = "/Account/MyOrders";
+                var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, url);
+                var fromEmail = new MailAddress(network.Network.UserName, "Ecommerce Sipariş Bilgisi");
+                var toEmail = new MailAddress(emailID);
+
+                string subject = "Ecommerce Sipariş Bilgisi";
+                string body = "<br/><br/>Ecommerce sayfanızda sipariş detaylarını görebilirisiniz. Detay için aşağıdaki linke tıklayınız" +
+                      " <br/><br/><a href='" + link + "'>" + link + "</a> ";
+                var smtp = new SmtpClient
+                {
+                    Host = network.Network.Host,
+                    Port = network.Network.Port,
+                    EnableSsl = network.Network.EnableSsl,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = network.Network.DefaultCredentials,
+                    Credentials = new NetworkCredential(network.Network.UserName, network.Network.Password)
+                };
+                using (var message = new MailMessage(fromEmail, toEmail)
+                {
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = true
+                })
+                    smtp.Send(message);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
     }
 }

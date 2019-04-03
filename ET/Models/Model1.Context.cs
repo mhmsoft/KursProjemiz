@@ -37,5 +37,7 @@ namespace ET.Models
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<userToaddress> userToaddress { get; set; }
         public virtual DbSet<wishlist> wishlist { get; set; }
+        public virtual DbSet<orderDetails> orderDetails { get; set; }
+        public virtual DbSet<orders> orders { get; set; }
     }
 }

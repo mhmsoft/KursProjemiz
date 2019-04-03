@@ -66,6 +66,23 @@
           <Property Name="passw" Type="varchar" MaxLength="255" />
           <Property Name="isAdmin" Type="bit" />
         </EntityType>
+        <EntityType Name="orderDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="orderId" Type="int" />
+          <Property Name="productId" Type="int" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="orderId" />
+          </Key>
+          <Property Name="orderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customerId" Type="int" />
+          <Property Name="orderDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="product">
           <Key>
             <PropertyRef Name="productId" />
@@ -175,6 +192,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__orderDeta__order__4CA06362">
+          <End Role="orders" Type="Self.orders" Multiplicity="0..1" />
+          <End Role="orderDetails" Type="Self.orderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="orderId" />
+            </Principal>
+            <Dependent Role="orderDetails">
+              <PropertyRef Name="orderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orderDeta__produ__4D94879B">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="orderDetails" Type="Self.orderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="productId" />
+            </Principal>
+            <Dependent Role="orderDetails">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orders__customer__49C3F6B7">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__product__brandId__2E1BDC42">
           <End Role="brand" Type="Self.brand" Multiplicity="0..1" />
           <End Role="product" Type="Self.product" Multiplicity="*" />
@@ -279,6 +332,8 @@
           <EntitySet Name="district" EntityType="Self.district" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="images" EntityType="Self.images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="member" EntityType="Self.member" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orderDetails" EntityType="Self.orderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
@@ -299,6 +354,18 @@
           <AssociationSet Name="FK__images__productI__2A4B4B5E" Association="Self.FK__images__productI__2A4B4B5E">
             <End Role="product" EntitySet="product" />
             <End Role="images" EntitySet="images" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orderDeta__order__4CA06362" Association="Self.FK__orderDeta__order__4CA06362">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="orderDetails" EntitySet="orderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orderDeta__produ__4D94879B" Association="Self.FK__orderDeta__produ__4D94879B">
+            <End Role="product" EntitySet="product" />
+            <End Role="orderDetails" EntitySet="orderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orders__customer__49C3F6B7" Association="Self.FK__orders__customer__49C3F6B7">
+            <End Role="user" EntitySet="user" />
+            <End Role="orders" EntitySet="orders" />
           </AssociationSet>
           <AssociationSet Name="FK__product__brandId__2E1BDC42" Association="Self.FK__product__brandId__2E1BDC42">
             <End Role="brand" EntitySet="brand" />
@@ -383,6 +450,7 @@
           <NavigationProperty Name="category" Relationship="Self.FK__product__categor__267ABA7A" FromRole="product" ToRole="category" />
           <NavigationProperty Name="images" Relationship="MembershipModel.FK__images__productI__2A4B4B5E" FromRole="product" ToRole="images" />
           <NavigationProperty Name="wishlist" Relationship="MembershipModel.FK__wishlist__produc__4316F928" FromRole="product" ToRole="wishlist" />
+          <NavigationProperty Name="orderDetails" Relationship="MembershipModel.FK__orderDeta__produ__4D94879B" FromRole="product" ToRole="orderDetails" />
         </EntityType>
         <Association Name="FK__product__brandId__2E1BDC42">
           <End Role="brand" Type="Self.brand" Multiplicity="0..1" />
@@ -469,6 +537,20 @@
             <End Role="user" EntitySet="user" />
             <End Role="wishlist" EntitySet="wishlist" />
           </AssociationSet>
+          <EntitySet Name="orderDetails" EntityType="MembershipModel.orderDetails" />
+          <EntitySet Name="orders" EntityType="MembershipModel.orders" />
+          <AssociationSet Name="FK__orderDeta__order__4CA06362" Association="MembershipModel.FK__orderDeta__order__4CA06362">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="orderDetails" EntitySet="orderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orderDeta__produ__4D94879B" Association="MembershipModel.FK__orderDeta__produ__4D94879B">
+            <End Role="product" EntitySet="product" />
+            <End Role="orderDetails" EntitySet="orderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orders__customer__49C3F6B7" Association="MembershipModel.FK__orders__customer__49C3F6B7">
+            <End Role="user" EntitySet="user" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="images">
           <Key>
@@ -552,6 +634,7 @@
           <NavigationProperty Name="Role" Relationship="MembershipModel.FK__user__roleId__3C69FB99" FromRole="user" ToRole="Role" />
           <NavigationProperty Name="userToaddress" Relationship="MembershipModel.FK__userToadd__userI__3F466844" FromRole="user" ToRole="userToaddress" />
           <NavigationProperty Name="wishlist" Relationship="MembershipModel.FK__wishlist__userId__440B1D61" FromRole="user" ToRole="wishlist" />
+          <NavigationProperty Name="orders" Relationship="MembershipModel.FK__orders__customer__49C3F6B7" FromRole="user" ToRole="orders" />
         </EntityType>
         <Association Name="FK__address__cityId__35BCFE0A">
           <End Type="MembershipModel.city" Role="city" Multiplicity="0..1" />
@@ -686,6 +769,63 @@
             </Principal>
             <Dependent Role="wishlist">
               <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="orderDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="orderId" Type="Int32" />
+          <Property Name="productId" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="orders" Relationship="MembershipModel.FK__orderDeta__order__4CA06362" FromRole="orderDetails" ToRole="orders" />
+          <NavigationProperty Name="product" Relationship="MembershipModel.FK__orderDeta__produ__4D94879B" FromRole="orderDetails" ToRole="product" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="orderId" />
+          </Key>
+          <Property Name="orderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customerId" Type="Int32" />
+          <Property Name="orderDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="orderDetails" Relationship="MembershipModel.FK__orderDeta__order__4CA06362" FromRole="orders" ToRole="orderDetails" />
+          <NavigationProperty Name="user" Relationship="MembershipModel.FK__orders__customer__49C3F6B7" FromRole="orders" ToRole="user" />
+        </EntityType>
+        <Association Name="FK__orderDeta__order__4CA06362">
+          <End Type="MembershipModel.orders" Role="orders" Multiplicity="0..1" />
+          <End Type="MembershipModel.orderDetails" Role="orderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="orderId" />
+            </Principal>
+            <Dependent Role="orderDetails">
+              <PropertyRef Name="orderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orderDeta__produ__4D94879B">
+          <End Type="MembershipModel.product" Role="product" Multiplicity="0..1" />
+          <End Type="MembershipModel.orderDetails" Role="orderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="productId" />
+            </Principal>
+            <Dependent Role="orderDetails">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orders__customer__49C3F6B7">
+          <End Type="MembershipModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="MembershipModel.orders" Role="orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="customerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -824,6 +964,25 @@
                 <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="productId" ColumnName="productId" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orderDetails">
+            <EntityTypeMapping TypeName="MembershipModel.orderDetails">
+              <MappingFragment StoreEntitySet="orderDetails">
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="orderId" ColumnName="orderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="MembershipModel.orders">
+              <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="orderDate" ColumnName="orderDate" />
+                <ScalarProperty Name="customerId" ColumnName="customerId" />
+                <ScalarProperty Name="orderId" ColumnName="orderId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -19,6 +19,7 @@ namespace ET.Models
         {
             this.images = new HashSet<images>();
             this.wishlist = new HashSet<wishlist>();
+            this.orderDetails = new HashSet<orderDetails>();
         }
     
         public int productId { get; set; }
@@ -37,5 +38,7 @@ namespace ET.Models
         public virtual ICollection<images> images { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<wishlist> wishlist { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<orderDetails> orderDetails { get; set; }
     }
 }

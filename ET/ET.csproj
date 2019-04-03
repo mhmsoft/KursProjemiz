@@ -248,6 +248,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\orderDetails.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\orders.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\product.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -263,6 +269,7 @@
     <Compile Include="Models\ViewModel\Account\UserAddress.cs" />
     <Compile Include="Models\ViewModel\Login.cs" />
     <Compile Include="Models\ViewModel\MyWishList.cs" />
+    <Compile Include="Models\ViewModel\order.cs" />
     <Compile Include="Models\ViewModel\Product2Brand.cs" />
     <Compile Include="Models\ViewModel\Product2Image.cs" />
     <Compile Include="Models\ViewModel\resetPassword.cs" />
@@ -312,6 +319,7 @@
     <Content Include="Views\Shared\_LayoutShop.cshtml" />
     <Content Include="Views\Default\Basket.cshtml" />
     <Content Include="Views\Default\CheckOut.cshtml" />
+    <Content Include="Views\Account\MyOrders.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

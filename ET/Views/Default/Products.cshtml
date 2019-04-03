@@ -57,7 +57,7 @@
 
      $(document).on("click", "#addCart",function () {
         var productId = $(this).attr("data-id");
-        alert(productId);
+        
                         $.ajax({
                             url: '@Url.Action("AddCart","Default")',
                             type:'post',

@@ -19,6 +19,7 @@ namespace ET.Models
         {
             this.userToaddress = new HashSet<userToaddress>();
             this.wishlist = new HashSet<wishlist>();
+            this.orders = new HashSet<orders>();
         }
     
         public int userId { get; set; }
@@ -45,5 +46,7 @@ namespace ET.Models
         public virtual ICollection<userToaddress> userToaddress { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<wishlist> wishlist { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<orders> orders { get; set; }
     }
 }
