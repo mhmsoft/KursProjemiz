@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using ET.Models;
 using ET.Models.ViewModel;
 using PagedList;
+using ET.Models.ViewModel.Account;
 
 
 namespace ET.Controllers
@@ -235,6 +236,36 @@ namespace ET.Controllers
         public ActionResult Basket()
         {
             return View();
+        }
+        [Authorize(Roles ="User")]
+        public ActionResult CheckOut()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            user availableUser = db.user.Where(x=>x.Email==User.Identity.Name).FirstOrDefault();
+
+            UserAddress model = new UserAddress()
+            {
+                user = availableUser,
+                addressList = db.userToaddress.Where(x=>x.userId==availableUser.userId).ToList()
+            };
+
+           
+            return View(model);
+
+        }
+        public void setDefaultAddress(int addressId)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                user availableUser = db.user.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
+                availableUser.addressId = addressId;
+                db.SaveChanges();
+            }
+           
+
         }
 
 

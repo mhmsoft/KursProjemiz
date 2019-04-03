@@ -311,6 +311,7 @@
     <Content Include="Views\Account\MyWishList.cshtml" />
     <Content Include="Views\Shared\_LayoutShop.cshtml" />
     <Content Include="Views\Default\Basket.cshtml" />
+    <Content Include="Views\Default\CheckOut.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

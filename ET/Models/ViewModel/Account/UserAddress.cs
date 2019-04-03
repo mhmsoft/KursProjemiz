@@ -10,5 +10,6 @@ namespace ET.Models.ViewModel.Account
         public int Id { get; set; }
         public user user { get; set; }
         public address address { get; set; }
+        public List<userToaddress> addressList { get; set; }
     }
 }

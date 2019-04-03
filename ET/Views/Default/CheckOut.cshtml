@@ -1,0 +1,159 @@
+﻿@model ET.Models.ViewModel.Account.UserAddress
+@using ET.Models.ViewModel
+@{
+    ViewBag.Title = "CheckOut";
+    Layout = "~/Views/Shared/_LayoutShop.cshtml";
+}
+
+<section id="cart_items">
+		<div class="container">
+			<div class="shopper-informations">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="shopper-info">
+                            <p>Müşteri </p>
+                            <form>
+                                <input type="text" value="@Model.user.firstName">
+                                <input type="text" value="@Model.user.lastName">
+                                <input type="text" value="@Model.user.phone">
+                            </form>
+                        </div>
+                    </div>
+                    @foreach (var item in Model.addressList)
+                    {
+                        <div class="col-sm-4">
+                            <div class="order-message">
+                                <p>@item.address.title</p>
+                                <textarea name="message" placeholder="Notes about your order, Special Notes for Delivery" rows="16">
+                                 @item.address.addressName
+                                  &#13
+                                  @item.address.district.districtName
+                                  &#13
+                                  @item.address.city.cityName
+                                </textarea>
+                                <label><input id="selectAddress" type="radio" value="@item.address.addressId"> Shipping to bill address</label>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+			</div>
+			<div class="review-payment">
+				<h2>Review & Payment</h2>
+			</div>
+
+			<div class="table-responsive cart_info">
+				<table class="table table-condensed">
+                    <thead>
+                        <tr class="cart_menu">
+                            <td class="image">Item</td>
+                            <td class="description"></td>
+                            <td class="price">Price</td>
+                            <td class="quantity">Quantity</td>
+                            <td class="total">Total</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Session["card"] != null)
+                        {
+                            foreach (BasketItem item in (List<BasketItem>)Session["card"])
+                            {
+                                <tr id="tr_@item.product.productId">
+                                    <td class="cart_product">
+                                        <a href=""><img style="width:80px;height:90px;" src="data:image/png;base64,@Convert.ToBase64String(item.img.imagepath)" alt=""></a>
+                                    </td>
+                                    <td class="cart_description">
+                                        <h4><a href="">@item.product.productName</a></h4>
+                                       
+                                    </td>
+                                    <td class="cart_price">
+                                        <p id="price">$@item.product.price</p>
+                                    </td>
+                                    <td class="cart_quantity">
+                                        <div class="cart_quantity_button">
+                                            <a class="cart_quantity_up" field="quantity_@item.Id" id="plus" href="javascript:void(0);"> + </a>
+                                            <input class="cart_quantity_input" type="text" id="quantity_@item.Id" name="quantity[]" value="@item.quantity" autocomplete="off" size="2">
+                                            <a class="cart_quantity_down" field="quantity_@item.Id" id="minus" href="javascript:void(0);"> - </a>
+                                        </div>
+                                    </td>
+
+                                    <td class="cart_total">
+                                        <p class="cart_total_price" id="total">$@(item.product.price * item.quantity)</p>
+                                    </td>
+                                    <td class="cart_delete">
+                                        <a class="cart_quantity_delete" field="tr_@item.product.productId" data-id="@item.product.productId" href="javascript:void(0);"><i class="fa fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                        else
+                        {
+                            <tr><td>Basket is empty</td></tr>
+                        }
+                        <tr>
+                            <td colspan="4">&nbsp;</td>
+                            <td colspan="2">
+                                <table class="table table-condensed total-result">
+                                    <tr>
+                                        <td>Toplam Tutar</td>
+                                        <td>
+                                            $@if (Session["card"] != null)
+                                            {
+
+                                                List<BasketItem> card = (List<BasketItem>)Session["card"];
+                                                var total = card.Sum(item => item.product.price * item.quantity);
+
+                                                @total
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vergi</td>
+                                        <td>$2</td>
+                                    </tr>
+                                    <tr class="shipping-cost">
+                                        <td>Kargo Ücreti</td>
+                                        <td>Free</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Toplam</td>
+                                        <td><span>$61</span></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+				</table>
+			</div>
+			<div class="payment-options">
+					<span>
+						<label><input type="checkbox"> Direct Bank Transfer</label>
+					</span>
+					<span>
+						<label><input type="checkbox"> Check Payment</label>
+					</span>
+                    <span>
+                        <label><input type="checkbox"> Paypal</label>
+                    </span>
+				</div>
+		</div>
+	</section> <!--/#cart_items-->
+
+<script type="text/javascript">
+    $(document).on("click", "#selectAddress", function () {
+        $('input[id="selectAddress"]').attr('checked', false);
+      
+        $(this).attr('checked', true);
+       
+        var addressId = $(this).val();
+        alert(addressId);
+        $.ajax({
+         type:'post',
+         url:'@Url.Action("setDefaultAddress","Default")',
+         data:{addressId:addressId}
+         
+         });
+    });
+</script>
