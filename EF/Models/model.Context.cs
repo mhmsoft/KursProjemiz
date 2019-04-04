@@ -26,9 +26,14 @@ namespace EF.Models
         }
     
         public virtual DbSet<category> categories { get; set; }
-        public virtual DbSet<member> members { get; set; }
         public virtual DbSet<product> products { get; set; }
         public virtual DbSet<brand> brands { get; set; }
         public virtual DbSet<image> images { get; set; }
+        public virtual DbSet<address> address { get; set; }
+        public virtual DbSet<city> city { get; set; }
+        public virtual DbSet<district> district { get; set; }
+        public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<user> user { get; set; }
+        public virtual DbSet<userToaddress> userToaddress { get; set; }
     }
 }

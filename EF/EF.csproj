@@ -1176,9 +1176,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BrandController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\address.cs">
+      <DependentUpon>model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\brand.cs">
       <DependentUpon>model.tt</DependentUpon>
@@ -1186,10 +1190,13 @@
     <Compile Include="Models\category.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\image.cs">
+    <Compile Include="Models\city.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\member.cs">
+    <Compile Include="Models\district.cs">
+      <DependentUpon>model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\image.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\model.Context.cs">
@@ -1211,6 +1218,16 @@
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductImageModel.cs" />
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\user.cs">
+      <DependentUpon>model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\userToaddress.cs">
+      <DependentUpon>model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModel\Account\UserAddress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1235,6 +1252,8 @@
     <Content Include="Views\Brand\Create.cshtml" />
     <Content Include="Views\Brand\Edit.cshtml" />
     <Content Include="Views\Brand\Delete.cshtml" />
+    <Content Include="Views\Member\Index.cshtml" />
+    <Content Include="Views\Member\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

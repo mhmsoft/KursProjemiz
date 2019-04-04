@@ -6,13 +6,25 @@
     <edmx:Diagrams>
       <Diagram DiagramId="0bd78673cb03453887392c31a64831be" Name="Diagram1">
         <EntityTypeShape EntityType="MembershipModel.category" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MembershipModel.member" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MembershipModel.product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="MembershipModel.FK__product__categor__267ABA7A" ManuallyRouted="false" />
         <EntityTypeShape EntityType="MembershipModel.brand" Width="1.5" PointX="5.375" PointY="0.875" />
         <AssociationConnector Association="MembershipModel.FK__product__brandId__2E1BDC42" />
         <EntityTypeShape EntityType="MembershipModel.image" Width="1.5" PointX="5.25" PointY="3.625" />
         <AssociationConnector Association="MembershipModel.FK__images__productI__2A4B4B5E" />
+        <EntityTypeShape EntityType="MembershipModel.address" Width="1.5" PointX="5.25" PointY="11.375" />
+        <EntityTypeShape EntityType="MembershipModel.city" Width="1.5" PointX="0.75" PointY="10.125" />
+        <EntityTypeShape EntityType="MembershipModel.district" Width="1.5" PointX="3" PointY="13.5" />
+        <EntityTypeShape EntityType="MembershipModel.Role" Width="1.5" PointX="5.25" PointY="9" />
+        <EntityTypeShape EntityType="MembershipModel.user" Width="1.5" PointX="7.5" PointY="10.375" />
+        <EntityTypeShape EntityType="MembershipModel.userToaddress" Width="1.5" PointX="9.75" PointY="11.75" />
+        <AssociationConnector Association="MembershipModel.FK__address__cityId__35BCFE0A" />
+        <AssociationConnector Association="MembershipModel.FK__address__distric__36B12243" />
+        <AssociationConnector Association="MembershipModel.FK__user__addressId__398D8EEE" />
+        <AssociationConnector Association="MembershipModel.FK__userToadd__addre__403A8C7D" />
+        <AssociationConnector Association="MembershipModel.FK__district__cityId__32E0915F" />
+        <AssociationConnector Association="MembershipModel.FK__user__roleId__3C69FB99" />
+        <AssociationConnector Association="MembershipModel.FK__userToadd__userI__3F466844" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

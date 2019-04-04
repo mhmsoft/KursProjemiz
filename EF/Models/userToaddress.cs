@@ -12,13 +12,13 @@ namespace EF.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class member
+    public partial class userToaddress
     {
-        public int memberId { get; set; }
-        public string LastName { get; set; }
-        public string FirstName { get; set; }
-        public string email { get; set; }
-        public string passw { get; set; }
-        public Nullable<bool> isAdmin { get; set; }
+        public int Id { get; set; }
+        public Nullable<int> userId { get; set; }
+        public Nullable<int> addressId { get; set; }
+    
+        public virtual address address { get; set; }
+        public virtual user user { get; set; }
     }
 }

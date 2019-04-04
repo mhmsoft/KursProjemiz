@@ -1,0 +1,72 @@
+﻿@model IEnumerable<EF.Models.ViewModel.Account.UserAddress>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>User Detail</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Role")
+        </th>
+        <th>
+            @Html.DisplayName("User Name")
+        </th>
+        <th>
+            @Html.DisplayName("First Name")
+        </th>
+        <th>
+            @Html.DisplayName("Last Name")
+        </th>
+        <th>
+            @Html.DisplayName("Address Title")
+        </th>
+        <th>
+            @Html.DisplayName("Addresses")
+        </th>
+        <th>
+            @Html.DisplayName("District")
+        </th>
+        <th>
+            @Html.DisplayName("City")
+        </th>
+      
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.role.roleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.user.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.user.firstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.user.lastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.address.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.address.addressName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.address.district.districtName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.address.city.cityName)
+        </td>
+       
+
+    </tr>
+    }
+</table>
