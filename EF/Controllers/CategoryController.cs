@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using EF.Models;
 using System.Data.Entity;
+using EF.Models.ViewModel.Category;
 
 namespace EF.Controllers
 {
@@ -17,11 +18,46 @@ namespace EF.Controllers
         public ActionResult Index()
         {
             //listeleme
-            return View(db.categories.ToList());
+            CatSubCat cat = new CatSubCat();
+
+            var model = from c in db.category   join  s in db.category on c.categoryId equals s.parentId into joinedTable from t in joinedTable.DefaultIfEmpty()  select new CatSubCat
+            {
+                categoryId = c.categoryId,
+                categoryName = c.categoryName,
+                subcategoryName = t.categoryName??string.Empty,
+                desc = c.categoryDesc
+
+            };
+           
+            return View(model);
+        }
+       
+        public ActionResult getsubCategories(int Id)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var result = db.category.Where(x => x.parentId == Id).ToList();
+            if (result != null)
+                return Json(result, JsonRequestBehavior.AllowGet);
+            else
+                return null;
         }
         public ActionResult Create()
         {
-            return View();
+            var t = db.category.Where(x => x.parentId == 0).ToList();
+            List<SelectListItem> liste = new List<SelectListItem>();
+            liste.Add(new SelectListItem() { Value = "0", Text = "Seçiniz", Selected = true });
+            foreach (var item in t)
+            {
+                liste.Add(new SelectListItem()
+                {
+                    Text =item.categoryName,
+                    Value =item.categoryId.ToString()
+                });
+            }
+            CatSubCat model = new CatSubCat();
+            model.categories = liste;
+//            ViewBag.categories =new SelectList(liste,"categoryId","categoryName");
+            return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -30,7 +66,7 @@ namespace EF.Controllers
             if (ModelState.IsValid)
             {
                 // kaydetme
-                db.categories.Add(_category);
+                db.category.Add(_category);
                 db.SaveChanges();
             }
 
@@ -40,7 +76,7 @@ namespace EF.Controllers
         {
             // seçme
             // select * from  category where categoryId=id
-            category model = db.categories.Where(a => a.categoryId == id).FirstOrDefault();
+            category model = db.category.Where(a => a.categoryId == id).FirstOrDefault();
             return View(model);
         }
         [HttpPost]
@@ -57,7 +93,7 @@ namespace EF.Controllers
         }
         public ActionResult Delete(int Id)
         {
-            category model = db.categories.Where(a => a.categoryId == Id).FirstOrDefault();
+            category model = db.category.Where(a => a.categoryId == Id).FirstOrDefault();
             return View(model);
         }
         [HttpPost]
@@ -66,8 +102,8 @@ namespace EF.Controllers
         {
             if (ModelState.IsValid)
             {
-                category model = db.categories.Where(a => a.categoryId == id).FirstOrDefault();
-                db.categories.Remove(model);
+                category model = db.category.Where(a => a.categoryId == id).FirstOrDefault();
+                db.category.Remove(model);
                 db.SaveChanges();
             }
             return RedirectToAction("Index");

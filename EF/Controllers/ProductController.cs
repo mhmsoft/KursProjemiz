@@ -21,10 +21,23 @@ namespace EF.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.categories = db.categories.ToList();
+            var t = db.category.Where(x => x.parentId == 0).ToList();
+            List<SelectListItem> liste = new List<SelectListItem>();
+            liste.Add(new SelectListItem() { Value = "0", Text = "Seçiniz", Selected = true });
+            foreach (var item in t)
+            {
+                liste.Add(new SelectListItem()
+                {
+                    Text = item.categoryName,
+                    Value = item.categoryId.ToString()
+                });
+            }
+            ViewBag.categories = liste;
             ViewBag.brands = db.brands.ToList();
             return View();
         }
+        
+        
         [HttpPost]
         public ActionResult Create(product _product,IEnumerable<HttpPostedFileBase> img)
         {
@@ -48,7 +61,7 @@ namespace EF.Controllers
                 }
 
             }
-            ViewBag.categories = db.categories.ToList();
+            ViewBag.categories = db.category.ToList();
             ViewBag.brands = db.brands.ToList();
             return View();
         }
@@ -70,7 +83,7 @@ namespace EF.Controllers
                 Imagelist = db.images.Where(a => a.productId == id).ToList()
             };
             //başlangıçta Categori listesi viEw' e gönderiyoruz
-            ViewBag.categories = new SelectList(db.categories,"categoryId","categoryName",pim.products.categoryId);
+            ViewBag.categories = new SelectList(db.category,"categoryId","categoryName",pim.products.categoryId);
             ViewBag.brands = new SelectList(db.brands, "brandId", "brandName", pim.products.brandId);
             return View(pim);
         }

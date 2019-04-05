@@ -10,7 +10,7 @@
 @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
     <h4>product</h4>
     <hr />
@@ -19,13 +19,24 @@
     <div class="form-group">
         @Html.LabelFor(model => model.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            <select class="form-control" name="categoryId">
+            <select class="form-control" name="categoryId" id="categoryId" onchange="getsubCategories()">
                 <option selected>Bir Kategori seçin</option>
 
                 @foreach (var item in ViewBag.categories)
                 {
-                    <option value="@item.categoryId">@item.categoryName</option>
+                    <option value="@item.Value">@item.Text</option>
                 }
+            </select>
+
+            @Html.ValidationMessageFor(model => model.categoryId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group"id="subCat">
+        @Html.LabelFor(model => model.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select class="form-control" name="subCategoryId" id="categoryId">
+                <option selected>Bir Alt Kategori seçin</option>
+
             </select>
 
             @Html.ValidationMessageFor(model => model.categoryId, "", new { @class = "text-danger" })
@@ -113,3 +124,31 @@
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+       
+        $("div#subCat").hide();
+        getsubCategories = function () {
+            alert($("#categoryId").val());
+            $.ajax({
+                url: "/Category/getsubCategories",
+               
+                data: { Id: $("#categoryId").val() },
+                success: function (response) {
+                    if (response != null) {
+                        $("div#subCat").show();
+                        $("div#subCat select").empty();
+                        $.each(response, function (i, data) {
+                            alert(JSON.stringify(data));
+                            $("div#subCat select").append(
+                                $('<option></option>').val(data.categoryId).html(data.categoryName)
+                            );
+                        });
+
+                    }
+                }
+            });
+        }
+    });
+
+</script>

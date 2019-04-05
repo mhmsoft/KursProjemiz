@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EF.Models.category>
+﻿@model IEnumerable<EF.Models.ViewModel.Category.CatSubCat>
 
 @{
     ViewBag.Title = "Index";
@@ -12,10 +12,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.categoryName)
+            @Html.DisplayName("id")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.categoryDesc)
+            @Html.DisplayName("cat")
+        </th>
+        <th>
+            @Html.DisplayName("sub")
+        </th>
+        <th>
+            @Html.DisplayName("Desc")
         </th>
         <th></th>
     </tr>
@@ -23,15 +29,21 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+        @Html.DisplayFor(modelItem => item.categoryId)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.categoryName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.categoryDesc)
+            @Html.DisplayFor(modelItem => item.subcategoryName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.categoryId }) |
-           
-            @Html.ActionLink("Delete", "Delete", new { id=item.categoryId })
+            @Html.DisplayFor(modelItem => item.desc)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.categoryId }) |
+
+            @Html.ActionLink("Delete", "Delete", new { id = item.categoryId })
         </td>
     </tr>
 }

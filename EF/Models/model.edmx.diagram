@@ -5,9 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="0bd78673cb03453887392c31a64831be" Name="Diagram1">
-        <EntityTypeShape EntityType="MembershipModel.category" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MembershipModel.product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="MembershipModel.FK__product__categor__267ABA7A" ManuallyRouted="false" />
         <EntityTypeShape EntityType="MembershipModel.brand" Width="1.5" PointX="5.375" PointY="0.875" />
         <AssociationConnector Association="MembershipModel.FK__product__brandId__2E1BDC42" />
         <EntityTypeShape EntityType="MembershipModel.image" Width="1.5" PointX="5.25" PointY="3.625" />
@@ -25,6 +23,8 @@
         <AssociationConnector Association="MembershipModel.FK__district__cityId__32E0915F" />
         <AssociationConnector Association="MembershipModel.FK__user__roleId__3C69FB99" />
         <AssociationConnector Association="MembershipModel.FK__userToadd__userI__3F466844" />
+        <EntityTypeShape EntityType="MembershipModel.category" Width="1.5" PointX="0.75" PointY="5.875" />
+        <AssociationConnector Association="MembershipModel.FK__product__categor__267ABA7A" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

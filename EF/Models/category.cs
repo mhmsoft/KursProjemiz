@@ -17,14 +17,15 @@ namespace EF.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public category()
         {
-            this.products = new HashSet<product>();
+            this.product = new HashSet<product>();
         }
     
         public int categoryId { get; set; }
         public string categoryName { get; set; }
         public string categoryDesc { get; set; }
+        public Nullable<int> parentId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<product> products { get; set; }
+        public virtual ICollection<product> product { get; set; }
     }
 }

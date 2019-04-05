@@ -25,7 +25,6 @@ namespace EF.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<category> categories { get; set; }
         public virtual DbSet<product> products { get; set; }
         public virtual DbSet<brand> brands { get; set; }
         public virtual DbSet<image> images { get; set; }
@@ -35,5 +34,6 @@ namespace EF.Models
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<user> user { get; set; }
         public virtual DbSet<userToaddress> userToaddress { get; set; }
+        public virtual DbSet<category> category { get; set; }
     }
 }

@@ -1228,6 +1228,7 @@
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModel\Account\UserAddress.cs" />
+    <Compile Include="Models\ViewModel\Category\CatSubCat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

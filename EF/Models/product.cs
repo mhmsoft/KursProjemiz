@@ -30,9 +30,9 @@ namespace EF.Models
         public string image { get; set; }
         public Nullable<int> brandId { get; set; }
     
-        public virtual category category { get; set; }
         public virtual brand brand { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<image> images { get; set; }
+        public virtual category category { get; set; }
     }
 }

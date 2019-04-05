@@ -30,6 +30,7 @@
           <Property Name="categoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="categoryName" Type="varchar" MaxLength="50" />
           <Property Name="categoryDesc" Type="varchar" MaxLength="100" />
+          <Property Name="parentId" Type="int" />
         </EntityType>
         <EntityType Name="city">
           <Key>
@@ -284,15 +285,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MembershipModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="category">
-          <Key>
-            <PropertyRef Name="categoryId" />
-          </Key>
-          <Property Name="categoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="categoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="categoryDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="products" Relationship="Self.FK__product__categor__267ABA7A" FromRole="category" ToRole="product" />
-        </EntityType>
         <EntityType Name="product">
           <Key>
             <PropertyRef Name="productId" />
@@ -305,30 +297,13 @@
           <Property Name="productDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="discount" Type="Decimal" Precision="6" Scale="2" />
           <Property Name="image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="category" Relationship="Self.FK__product__categor__267ABA7A" FromRole="product" ToRole="category" />
           <Property Name="brandId" Type="Int32" />
           <NavigationProperty Name="brand" Relationship="MembershipModel.FK__product__brandId__2E1BDC42" FromRole="product" ToRole="brand" />
           <NavigationProperty Name="images" Relationship="MembershipModel.FK__images__productI__2A4B4B5E" FromRole="product" ToRole="image" />
+          <NavigationProperty Name="category" Relationship="MembershipModel.FK__product__categor__267ABA7A" FromRole="product" ToRole="category" />
         </EntityType>
-        <Association Name="FK__product__categor__267ABA7A">
-          <End Role="category" Type="Self.category" Multiplicity="0..1" />
-          <End Role="product" Type="Self.product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="category">
-              <PropertyRef Name="categoryId" />
-            </Principal>
-            <Dependent Role="product">
-              <PropertyRef Name="categoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="MembershipEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="categories" EntityType="Self.category" />
           <EntitySet Name="products" EntityType="Self.product" />
-          <AssociationSet Name="FK__product__categor__267ABA7A" Association="Self.FK__product__categor__267ABA7A">
-            <End Role="category" EntitySet="categories" />
-            <End Role="product" EntitySet="products" />
-          </AssociationSet>
           <EntitySet Name="brands" EntityType="MembershipModel.brand" />
           <AssociationSet Name="FK__product__brandId__2E1BDC42" Association="MembershipModel.FK__product__brandId__2E1BDC42">
             <End Role="brand" EntitySet="brands" />
@@ -372,6 +347,11 @@
           <AssociationSet Name="FK__userToadd__userI__3F466844" Association="MembershipModel.FK__userToadd__userI__3F466844">
             <End Role="user" EntitySet="user" />
             <End Role="userToaddress" EntitySet="userToaddress" />
+          </AssociationSet>
+          <EntitySet Name="category" EntityType="MembershipModel.category" />
+          <AssociationSet Name="FK__product__categor__267ABA7A" Association="MembershipModel.FK__product__categor__267ABA7A">
+            <End Role="category" EntitySet="category" />
+            <End Role="product" EntitySet="products" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="brand">
@@ -579,21 +559,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="categoryId" />
+          </Key>
+          <Property Name="categoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="categoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="categoryDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="parentId" Type="Int32" />
+          <NavigationProperty Name="product" Relationship="MembershipModel.FK__product__categor__267ABA7A" FromRole="category" ToRole="product" />
+        </EntityType>
+        <Association Name="FK__product__categor__267ABA7A">
+          <End Type="MembershipModel.category" Role="category" Multiplicity="0..1" />
+          <End Type="MembershipModel.product" Role="product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="categoryId" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MembershipModelStoreContainer" CdmEntityContainer="MembershipEntities">
-          <EntitySetMapping Name="categories">
-            <EntityTypeMapping TypeName="MembershipModel.category">
-              <MappingFragment StoreEntitySet="category">
-                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
-                <ScalarProperty Name="categoryName" ColumnName="categoryName" />
-                <ScalarProperty Name="categoryDesc" ColumnName="categoryDesc" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="products">
             <EntityTypeMapping TypeName="MembershipModel.product">
               <MappingFragment StoreEntitySet="product">
@@ -693,6 +686,16 @@
                 <ScalarProperty Name="addressId" ColumnName="addressId" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="category">
+            <EntityTypeMapping TypeName="MembershipModel.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="categoryDesc" ColumnName="categoryDesc" />
+                <ScalarProperty Name="categoryName" ColumnName="categoryName" />
+                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
