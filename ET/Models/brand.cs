@@ -22,7 +22,6 @@ namespace ET.Models
     
         public int brandId { get; set; }
         public string brandName { get; set; }
-        public string brandDesc { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<product> product { get; set; }

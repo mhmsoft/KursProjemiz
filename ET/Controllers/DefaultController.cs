@@ -11,6 +11,10 @@ using System.Net.Configuration;
 using System.Configuration;
 using System.Net.Mail;
 using System.Net;
+using System.IO;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace ET.Controllers
 {
@@ -46,6 +50,31 @@ namespace ET.Controllers
         {
             return PartialView();
         }
+        public ActionResult Thumbnail(int width, int height, int Id)
+        {
+            // TODO: the filename could be passed as argument of course
+            var photo = db.images.Find(Id).imagePath;
+            var base64 = Convert.ToBase64String(photo);
+            // Convert Base64 String to byte[]
+            byte[] imageBytes = Convert.FromBase64String(base64);
+            MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
+            // Convert byte[] to Image
+            ms.Write(imageBytes, 0, imageBytes.Length);
+            Image image = Image.FromStream(ms, true);
+
+            using (var newImage = new Bitmap(width, height))
+            using (var graphics = Graphics.FromImage(newImage))
+            using (var stream = new MemoryStream())
+            {
+                graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                graphics.DrawImage(image, new Rectangle(0, 0, width, height));
+                newImage.Save(stream, ImageFormat.Png);
+                return File(stream.ToArray(), "image/png");
+            }
+
+        }
 
         public ActionResult Products(int? categoryId, int? brandid, string searchValue, int? page)
         {
@@ -58,7 +87,7 @@ namespace ET.Controllers
                 var query = from p in db.product
                             join i in db.images
                             on p.productId equals i.productId
-                            where (i.isShow == true)
+                            where (i.isshow == true)
                             select new product2Image
                             {
                                 image = i,
@@ -74,7 +103,7 @@ namespace ET.Controllers
                 var query = from p in db.product
                             join i in db.images
        on p.productId equals i.productId
-                            where (i.isShow == true && p.categoryId == categoryId)
+                            where (i.isshow == true && p.categoryId == categoryId)
                             select new product2Image
                             {
                                 image = i,
@@ -89,7 +118,7 @@ namespace ET.Controllers
             {
                 var m = (from p in db.product
                          join i in db.images on p.productId equals i.productId
-                         where (i.isShow == true && p.brandId == brandid)
+                         where (i.isshow == true && p.brandId == brandid)
                          select new product2Image { products = p, image = i });
                 m = m.OrderBy(s => s.products.productName);
                 return View(m.ToPagedList(pageNumber, pageSize));
@@ -99,7 +128,7 @@ namespace ET.Controllers
                 var query = from p in db.product
                             join i in db.images
        on p.productId equals i.productId
-                            where (i.isShow == true)
+                            where (i.isshow == true)
                             select new product2Image
                             {
                                 image = i,
@@ -129,7 +158,7 @@ namespace ET.Controllers
 
         public bool isExists(int productId)
         {
-            var result = db.wishlist.FirstOrDefault(x => x.productId == productId);
+            var result = db.wishList.FirstOrDefault(x => x.productId == productId);
             return result != null;
         }
 
@@ -147,12 +176,12 @@ namespace ET.Controllers
             if (!isExists(productId))
             {
                 product y = db.product.Where(x => x.productId == productId).FirstOrDefault();
-                wishlist model = new wishlist()
+                wishList model = new wishList()
                 {
                     product = y,
                     user = availableUser
                 };
-                db.wishlist.Add(model);
+                db.wishList.Add(model);
                 db.SaveChanges();
                 return Content("Eklendi.");
             }
@@ -178,7 +207,7 @@ namespace ET.Controllers
         {
             string message = "";
             product _product = db.product.FirstOrDefault(x => x.productId == productId);
-            images _image = db.images.FirstOrDefault(x => x.productId == productId && x.isShow == true);
+            images _image = db.images.FirstOrDefault(x => x.productId == productId && x.isshow == true);
 
             if (Session["card"] == null)
             {

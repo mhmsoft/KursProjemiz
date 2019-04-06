@@ -22,7 +22,7 @@ namespace ET.Models
     
         public int categoryId { get; set; }
         public string categoryName { get; set; }
-        public string categoryDesc { get; set; }
+        public string description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<product> product { get; set; }

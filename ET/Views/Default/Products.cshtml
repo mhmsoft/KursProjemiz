@@ -11,14 +11,14 @@
         <div class="product-image-wrapper">
             <div class="single-products">
                 <div class="productinfo text-center">
-                    <img src="data:image/png;base64,@Convert.ToBase64String(item.image.imagepath)" alt="" />
-                    <h2>$@item.products.price</h2>
+                    <img src="@Url.Action("Thumbnail", "Default", new { width = 100, height = 100, Id = item.image.imageId })" alt="" />
+                    <h2>$@item.products.salePrice</h2>
                     <p>@item.products.productName</p>
                     <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                 </div>
                 <div class="product-overlay">
                     <div class="overlay-content">
-                        <h2>$@item.products.price</h2>
+                        <h2>$@item.products.salePrice</h2>
                         <p>@item.products.productName</p>
                         <a href="javascript:void(0);" data-id="@item.products.productId" id="addCart"  class="btn btn-default add-to-cart">
                             <i class="fa fa-shopping-cart"></i>Add to cart

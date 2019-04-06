@@ -25,19 +25,18 @@ namespace ET.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<address> address { get; set; }
         public virtual DbSet<brand> brand { get; set; }
         public virtual DbSet<category> category { get; set; }
-        public virtual DbSet<member> member { get; set; }
-        public virtual DbSet<product> product { get; set; }
-        public virtual DbSet<images> images { get; set; }
-        public virtual DbSet<address> address { get; set; }
         public virtual DbSet<city> city { get; set; }
         public virtual DbSet<district> district { get; set; }
-        public virtual DbSet<user> user { get; set; }
-        public virtual DbSet<Role> Role { get; set; }
-        public virtual DbSet<userToaddress> userToaddress { get; set; }
-        public virtual DbSet<wishlist> wishlist { get; set; }
+        public virtual DbSet<images> images { get; set; }
         public virtual DbSet<orderDetails> orderDetails { get; set; }
         public virtual DbSet<orders> orders { get; set; }
+        public virtual DbSet<product> product { get; set; }
+        public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<user> user { get; set; }
+        public virtual DbSet<userToaddress> userToaddress { get; set; }
+        public virtual DbSet<wishList> wishList { get; set; }
     }
 }

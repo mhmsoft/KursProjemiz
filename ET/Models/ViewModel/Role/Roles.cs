@@ -8,10 +8,23 @@ namespace ET.Models.ViewModel.Role
 {
     public class Roles : RoleProvider
     {
-        public override string ApplicationName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+     
 
         // db ekliyoruz
         MembershipEntities db = new MembershipEntities();
+
+        public override string ApplicationName
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)
         {
