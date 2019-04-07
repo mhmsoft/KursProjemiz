@@ -29,6 +29,7 @@
           <Property Name="categoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="categoryName" Type="varchar" MaxLength="50" />
           <Property Name="description" Type="varchar" MaxLength="150" />
+          <Property Name="parentId" Type="int" />
         </EntityType>
         <EntityType Name="city">
           <Key>
@@ -496,6 +497,7 @@
           <Property Name="categoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="product" Relationship="MembershipModel.FK__product__categor__145C0A3F" FromRole="category" ToRole="product" />
+          <Property Name="parentId" Type="Int32" />
         </EntityType>
         <EntityType Name="city">
           <Key>
@@ -831,6 +833,7 @@
           <EntitySetMapping Name="category">
             <EntityTypeMapping TypeName="MembershipModel.category">
               <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="categoryName" ColumnName="categoryName" />
                 <ScalarProperty Name="categoryId" ColumnName="categoryId" />

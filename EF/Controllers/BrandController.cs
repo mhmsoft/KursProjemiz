@@ -13,7 +13,7 @@ namespace EF.Controllers
         // GET: Brand
         public ActionResult Index()
         {
-            return View(db_.brands.ToList());
+            return View(db_.brand.ToList());
         }
         public ActionResult Create()
         {
@@ -25,7 +25,7 @@ namespace EF.Controllers
         {   
             if(ModelState.IsValid)
             {
-                db_.brands.Add(_brand);
+                db_.brand.Add(_brand);
                 db_.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -39,7 +39,7 @@ namespace EF.Controllers
         }
         public ActionResult Edit(int Id)
         {
-            brand brand_model = db_.brands.FirstOrDefault(x=>x.brandId==Id);
+            brand brand_model = db_.brand.FirstOrDefault(x=>x.brandId==Id);
             return View(brand_model);
         }
         [HttpPost]
@@ -61,17 +61,17 @@ namespace EF.Controllers
         }
         public ActionResult Delete(int Id)
         {
-            brand brand_model = db_.brands.FirstOrDefault(x => x.brandId == Id);
+            brand brand_model = db_.brand.FirstOrDefault(x => x.brandId == Id);
             return View(brand_model);
         }
         [HttpPost,ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteBrand(int Id)
         {
-            brand brand_model = db_.brands.FirstOrDefault(x => x.brandId == Id);
+            brand brand_model = db_.brand.FirstOrDefault(x => x.brandId == Id);
             if (brand_model != null)
             {
-                db_.brands.Remove(brand_model);
+                db_.brand.Remove(brand_model);
                 db_.SaveChanges();
                 return RedirectToAction("index");
             }

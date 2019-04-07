@@ -12,12 +12,12 @@ namespace EF.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class image
+    public partial class images
     {
         public int imageId { get; set; }
         public Nullable<int> productId { get; set; }
-        public Nullable<bool> isShow { get; set; }
-        public byte[] imagepath { get; set; }
+        public Nullable<bool> isshow { get; set; }
+        public byte[] imagePath { get; set; }
     
         public virtual product product { get; set; }
     }

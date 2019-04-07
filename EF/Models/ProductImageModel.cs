@@ -7,13 +7,13 @@ namespace EF.Models
 {
     public class ProductImageModel
     {
-        public List<image> Imagelist { get; set; }
+        public List<images> Imagelist { get; set; }
         public List<product> Productlist { get; set; }
-        public image Image { get; set; }
+        public images Image { get; set; }
         public product products { get; set; }
         public ProductImageModel()
         {
-            image imagemodel = new image();
+            images imagemodel = new images();
             product propductmodel = new product();
 
         }

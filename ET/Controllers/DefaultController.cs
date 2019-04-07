@@ -302,7 +302,7 @@ namespace ET.Controllers
         }
         public ActionResult completeCheckOut()
         {
-            bool status = false;
+          
             string message = "";
             if(!User.Identity.IsAuthenticated)
             {

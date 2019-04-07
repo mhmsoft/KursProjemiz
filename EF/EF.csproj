@@ -1,4 +1,5 @@
-﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -1196,7 +1197,7 @@
     <Compile Include="Models\district.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\image.cs">
+    <Compile Include="Models\images.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\model.Context.cs">
@@ -1214,6 +1215,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\orderDetails.cs">
+      <DependentUpon>model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\orders.cs">
+      <DependentUpon>model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\product.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
@@ -1229,6 +1236,9 @@
     </Compile>
     <Compile Include="Models\ViewModel\Account\UserAddress.cs" />
     <Compile Include="Models\ViewModel\Category\CatSubCat.cs" />
+    <Compile Include="Models\wishList.cs">
+      <DependentUpon>model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

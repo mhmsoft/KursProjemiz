@@ -17,7 +17,9 @@ namespace EF.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public user()
         {
+            this.orders = new HashSet<orders>();
             this.userToaddress = new HashSet<userToaddress>();
+            this.wishList = new HashSet<wishList>();
         }
     
         public int userId { get; set; }
@@ -39,8 +41,12 @@ namespace EF.Models
         public Nullable<int> roleId { get; set; }
     
         public virtual address address { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<orders> orders { get; set; }
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<userToaddress> userToaddress { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<wishList> wishList { get; set; }
     }
 }

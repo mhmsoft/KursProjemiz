@@ -25,7 +25,7 @@ namespace EF.Controllers
                 categoryId = c.categoryId,
                 categoryName = c.categoryName,
                 subcategoryName = t.categoryName??string.Empty,
-                desc = c.categoryDesc
+                desc = c.description
 
             };
            
@@ -39,7 +39,7 @@ namespace EF.Controllers
             if (result != null)
                 return Json(result, JsonRequestBehavior.AllowGet);
             else
-                return null;
+                return Content("0");
         }
         public ActionResult Create()
         {
