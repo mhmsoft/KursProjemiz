@@ -38,8 +38,8 @@
                         {
                             <tr id="tr_@item.Id">
                                 <td class="cart_product">
-                                    <a href="@Url.Action("ProductDetails","Default",new {productId=item.product.productId })"><img style="width:80px;height:90px;"
-                                   src="data:image/png;base64,@Convert.ToBase64String(item.product.images.FirstOrDefault(x=>x.isShow==true).imagepath)" alt=""></a>
+                                    <a href="@Url.Action("ProductDetails","Default",new {productId=item.product.productId })"><img 
+                                   src="@Url.Action("Thumbnail", "Default", new { width = 50, height = 50, Id = item.product.images.FirstOrDefault(x=>x.isShow==true).imageId })" alt=""></a>
                                 </td>
                                 <td>
                                     <p>@item.product.category.categoryName</p>

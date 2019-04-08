@@ -12,7 +12,7 @@ namespace EF.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class wishList
+    public partial class wishlist
     {
         public int id { get; set; }
         public Nullable<int> productId { get; set; }

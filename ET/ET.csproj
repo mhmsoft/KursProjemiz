@@ -273,7 +273,7 @@
     <Compile Include="Models\ViewModel\resetPassword.cs" />
     <Compile Include="Models\ViewModel\Role\Roles.cs" />
     <Compile Include="Models\ViewModel\ShopList.cs" />
-    <Compile Include="Models\wishList.cs">
+    <Compile Include="Models\wishlist.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

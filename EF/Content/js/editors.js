@@ -3,12 +3,12 @@ $(function() {
     $('#bootstrap-editor').wysihtml5();
 
     // Ckeditor standard
-    $( '#desc' ).ckeditor({width:'98%', height: '150px', toolbar: [
+    $( '#editor' ).ckeditor({width:'98%', height: '150px', toolbar: [
 		{ name: 'document', items: [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ] },	// Defines toolbar group with name (used to create voice label) and items in 3 subgroups.
 		[ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],			// Defines toolbar group without name.
 		{ name: 'basicstyles', items: [ 'Bold', 'Italic' ] }
 	]});
-    $( '#desc' ).ckeditor({width:'98%', height: '150px'});
+    $( '#editor' ).ckeditor({width:'98%', height: '150px'});
 });
 
 // Tiny MCE

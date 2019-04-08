@@ -182,8 +182,8 @@ namespace ET.Controllers
         }
         public string deleteWishList(int Id)
         {
-            wishList deletedWish = db.wishList.Where(x => x.id == Id).SingleOrDefault();
-            db.wishList.Remove(deletedWish);
+            wishlist deletedWish = db.wishlist.Where(x => x.id == Id).SingleOrDefault();
+            db.wishlist.Remove(deletedWish);
             db.SaveChanges();
             return "silindi";
         }
@@ -194,7 +194,7 @@ namespace ET.Controllers
             {
                 string userName = User.Identity.Name;
                 var model = (from u in db.user
-                             join w in db.wishList on u.userId equals w.userId
+                             join w in db.wishlist on u.userId equals w.userId
                              join p in db.product on w.productId equals p.productId
                              where u.Email == userName
                              select new MyWishList
@@ -209,7 +209,7 @@ namespace ET.Controllers
         }
         public string deleteMyOrder(int Id)
         {
-            orderDetails deletedorder = db.orderDetails.Where(x => x.id == Id).SingleOrDefault();
+            orderDetails deletedorder = db.orderDetails.Where(x => x.Id == Id).SingleOrDefault();
             db.orderDetails.Remove(deletedorder);
             db.SaveChanges();
            /* orders deleteorder = db.orders.Where(x=>x.orderId==deletedorder.orderId).SingleOrDefault();
@@ -228,7 +228,7 @@ namespace ET.Controllers
                 var model = from u in db.user join o in db.orders on u.userId equals o.customerId join od in db.orderDetails on o.orderId equals od.orderId join p in db.product on od.productId equals p.productId where u.userId ==availableUser.userId select new orderDetail
                 {
 
-                    Id = od.id,
+                    Id = od.Id,
                     product = p,
                     quantity = od.quantity ?? 1,
                     orderId = od.orderId ?? 1,

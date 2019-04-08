@@ -115,6 +115,7 @@
     <Content Include="Content\css\styles.css" />
     <Content Include="Content\images\facebook.png" />
     <Content Include="Content\js\calendar.js" />
+    <Content Include="Content\js\ckeditor.js" />
     <Content Include="Content\js\custom.js" />
     <Content Include="Content\js\editors.js" />
     <Content Include="Content\js\forms.js" />
@@ -1153,6 +1154,7 @@
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\js\ckeditor.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1236,7 +1238,7 @@
     </Compile>
     <Compile Include="Models\ViewModel\Account\UserAddress.cs" />
     <Compile Include="Models\ViewModel\Category\CatSubCat.cs" />
-    <Compile Include="Models\wishList.cs">
+    <Compile Include="Models\wishlist.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

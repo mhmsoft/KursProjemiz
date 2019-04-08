@@ -19,7 +19,7 @@ namespace EF.Models
         {
             this.orders = new HashSet<orders>();
             this.userToaddress = new HashSet<userToaddress>();
-            this.wishList = new HashSet<wishList>();
+            this.wishlist = new HashSet<wishlist>();
         }
     
         public int userId { get; set; }
@@ -47,6 +47,6 @@ namespace EF.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<userToaddress> userToaddress { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<wishList> wishList { get; set; }
+        public virtual ICollection<wishlist> wishlist { get; set; }
     }
 }

@@ -24,8 +24,8 @@ namespace EF.Models
         public Nullable<int> customerId { get; set; }
         public Nullable<System.DateTime> orderDate { get; set; }
     
+        public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<orderDetails> orderDetails { get; set; }
-        public virtual user user { get; set; }
     }
 }

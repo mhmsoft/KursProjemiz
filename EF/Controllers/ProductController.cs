@@ -50,7 +50,7 @@ namespace EF.Controllers
 
             images new_img = new images();
             new_img.productId = _product.productId;
-            new_img.isshow = false;
+            new_img.isShow = false;
             if (img.First() != null)
             {
                 foreach (var item in img)
@@ -58,7 +58,7 @@ namespace EF.Controllers
                     using (var br = new BinaryReader(item.InputStream))
                     {
                         var data = br.ReadBytes(item.ContentLength);
-                        new_img.imagePath = data;
+                        new_img.imagepath = data;
                         db.images.Add(new_img);
                         db.SaveChanges();
                     }
@@ -111,14 +111,14 @@ namespace EF.Controllers
             if (img.First() != null)
             {
                 images new_img = new images();
-                new_img.isshow = false;
+                new_img.isShow = false;
                 new_img.productId = _product.productId;
                 foreach (var item in img)
                 {
                     using (var br = new BinaryReader(item.InputStream))
                     {
                         var data = br.ReadBytes(item.ContentLength);
-                        new_img.imagePath = data;
+                        new_img.imagepath = data;
                         db.images.Add(new_img);
                         db.SaveChanges();
                     }
@@ -151,7 +151,7 @@ namespace EF.Controllers
 
             db.images.Remove(img);
             db.SaveChanges();
-             System.IO.File.Delete(Server.MapPath("~/Content/uploads/" + img.imagePath.ToString()));
+             System.IO.File.Delete(Server.MapPath("~/Content/uploads/" + img.imagepath.ToString()));
                 islem = "Silme işlemi Yapıldı";
             }
             return islem;
@@ -165,12 +165,12 @@ namespace EF.Controllers
 
             foreach (var item in allImages)
             {
-                item.isshow = false;
+                item.isShow = false;
                 db.Entry(item).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
             images  img = db.images.Where(a => a.imageId == image_id).FirstOrDefault();
-            img.isshow = true;
+            img.isShow = true;
             string mesaj="Değişiklik yok";
             if (img != null)
             {

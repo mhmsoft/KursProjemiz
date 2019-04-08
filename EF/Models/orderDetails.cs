@@ -14,7 +14,7 @@ namespace EF.Models
     
     public partial class orderDetails
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public Nullable<int> orderId { get; set; }
         public Nullable<int> productId { get; set; }
         public Nullable<int> quantity { get; set; }

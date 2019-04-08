@@ -52,8 +52,8 @@ namespace ET.Controllers
         }
         public ActionResult Thumbnail(int width, int height, int Id)
         {
-            // TODO: the filename could be passed as argument of course
-            var photo = db.images.Find(Id).imagePath;
+           
+            var photo = db.images.Find(Id).imagepath;
             var base64 = Convert.ToBase64String(photo);
             // Convert Base64 String to byte[]
             byte[] imageBytes = Convert.FromBase64String(base64);
@@ -87,7 +87,7 @@ namespace ET.Controllers
                 var query = from p in db.product
                             join i in db.images
                             on p.productId equals i.productId
-                            where (i.isshow == true)
+                            where (i.isShow == true)
                             select new product2Image
                             {
                                 image = i,
@@ -103,7 +103,7 @@ namespace ET.Controllers
                 var query = from p in db.product
                             join i in db.images
        on p.productId equals i.productId
-                            where (i.isshow == true && p.categoryId == categoryId)
+                            where (i.isShow == true && p.categoryId == categoryId)
                             select new product2Image
                             {
                                 image = i,
@@ -118,7 +118,7 @@ namespace ET.Controllers
             {
                 var m = (from p in db.product
                          join i in db.images on p.productId equals i.productId
-                         where (i.isshow == true && p.brandId == brandid)
+                         where (i.isShow == true && p.brandId == brandid)
                          select new product2Image { products = p, image = i });
                 m = m.OrderBy(s => s.products.productName);
                 return View(m.ToPagedList(pageNumber, pageSize));
@@ -128,7 +128,7 @@ namespace ET.Controllers
                 var query = from p in db.product
                             join i in db.images
        on p.productId equals i.productId
-                            where (i.isshow == true)
+                            where (i.isShow == true)
                             select new product2Image
                             {
                                 image = i,
@@ -158,7 +158,7 @@ namespace ET.Controllers
 
         public bool isExists(int productId)
         {
-            var result = db.wishList.FirstOrDefault(x => x.productId == productId);
+            var result = db.wishlist.FirstOrDefault(x => x.productId == productId);
             return result != null;
         }
 
@@ -176,12 +176,12 @@ namespace ET.Controllers
             if (!isExists(productId))
             {
                 product y = db.product.Where(x => x.productId == productId).FirstOrDefault();
-                wishList model = new wishList()
+                wishlist model = new wishlist()
                 {
                     product = y,
                     user = availableUser
                 };
-                db.wishList.Add(model);
+                db.wishlist.Add(model);
                 db.SaveChanges();
                 return Content("Eklendi.");
             }
@@ -207,7 +207,7 @@ namespace ET.Controllers
         {
             string message = "";
             product _product = db.product.FirstOrDefault(x => x.productId == productId);
-            images _image = db.images.FirstOrDefault(x => x.productId == productId && x.isshow == true);
+            images _image = db.images.FirstOrDefault(x => x.productId == productId && x.isShow == true);
 
             if (Session["card"] == null)
             {

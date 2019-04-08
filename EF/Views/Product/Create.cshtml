@@ -78,18 +78,28 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.salePrice, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.price, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.salePrice, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.salePrice, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.productDesc, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.productDesc, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.TextAreaFor(model => model.productDesc, new { htmlAttributes = new { @class = "form-control",id= "productDesc" } })
             @Html.ValidationMessageFor(model => model.productDesc, "", new { @class = "text-danger" })
+            
+            <script type="text/javascript">
+              
+                    ClassicEditor
+                        .create(document.querySelector( '#productDesc' ) )
+                        .catch( error => {
+                        console.error(error);
+                    } );
+           
+            </script>
         </div>
     </div>
 

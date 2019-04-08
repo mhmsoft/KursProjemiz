@@ -9,7 +9,7 @@
     <!--product-details-->
     <div class="col-sm-5">
         <div class="view-product">
-            <img src="data:image/png;base64,@Convert.ToBase64String(Model.imageList.Find(x => x.isShow == true).imagepath)" alt="@Model.products.productName" />
+            <img src="@Url.Action("Thumbnail", "Default", new { width = 329, height = 380, Id = Model.imageList.FirstOrDefault(x=>x.isShow==true).imageId })" alt="@Model.products.productName" />
             <h3>ZOOM</h3>
         </div>
         <div id="similar-product" class="carousel slide" data-ride="carousel">
@@ -21,7 +21,7 @@
                     {
                         foreach (var item in Model.imageList.Where(x=>x.isShow==false))
                         {
-                            <a href=""><img src="data:image/png;base64,@Convert.ToBase64String(item.imagepath)" alt=""></a>
+                            <a href=""><img src="@Url.Action("Thumbnail", "Default", new { width = 50, height = 50, Id = item.product.images.FirstOrDefault(x=>x.isShow==true).imageId })" alt=""></a>
                         }
                     }
                 </div>
