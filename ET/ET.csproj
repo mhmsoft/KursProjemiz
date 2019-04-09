@@ -266,6 +266,7 @@
     </Compile>
     <Compile Include="Models\ViewModel\Account\UserAddress.cs" />
     <Compile Include="Models\ViewModel\Login.cs" />
+    <Compile Include="Models\ViewModel\mainSubCategories.cs" />
     <Compile Include="Models\ViewModel\MyWishList.cs" />
     <Compile Include="Models\ViewModel\order.cs" />
     <Compile Include="Models\ViewModel\Product2Brand.cs" />

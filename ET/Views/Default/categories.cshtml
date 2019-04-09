@@ -1,9 +1,37 @@
-﻿@model IEnumerable<ET.Models.category>
-@foreach (var item in Model)
+﻿@model  ET.Models.ViewModel.mainSubCategories
+@foreach (var item in Model.allCategories)
 {
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h4 class="panel-title"><a href="@Url.Action("Products","Default",new {categoryId=item.categoryId })"> @item.categoryName</a></h4>
+        <h4 class="panel-title">
+            @{ if (Model.subCategories.Exists(x=>x.parentId==item.categoryId))
+                {
+
+                    <a data-toggle="collapse" data-parent="#accordian" href="#@item.categoryId">
+                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+
+                        @item.categoryName
+                    </a>
+
+                }
+                else
+                {
+                    <a href="@Url.Action("Products","Default",new {categoryId=item.categoryId })"> @item.categoryName</a>
+                }
+            }
+        </h4>
+    </div>
+    <div id="@item.categoryId" class="panel-collapse collapse">
+        <div class="panel-body">
+            <ul>
+                @foreach (var sub in Model.subCategories.Where(x=>x.parentId==item.categoryId) )
+                {
+                    <li><a  href="@Url.Action("Products","Default",new {categoryId=sub.categoryId })">@sub.categoryName </a></li>
+                }
+
+
+            </ul>
+        </div>
     </div>
 </div>
-}
+                }

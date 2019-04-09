@@ -16,6 +16,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
+
 namespace ET.Controllers
 {
     public class DefaultController : Controller
@@ -28,7 +29,11 @@ namespace ET.Controllers
         }
         public PartialViewResult categories()
         {
-            return PartialView(db.category.ToList());
+           mainSubCategories model = new mainSubCategories();
+           model.mainCategories= db.category.Where(x => x.parentId == 0).ToList();
+           model.subCategories = db.category.Where(x => x.parentId != 0).ToList();
+           model.allCategories = db.category.ToList();
+            return PartialView(model);
         }
         public PartialViewResult brands()
         {

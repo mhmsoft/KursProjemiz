@@ -31,7 +31,7 @@ namespace EF.Controllers
            
             return View(model);
         }
-       
+       // product/Create ajax
         public ActionResult getsubCategories(int Id)
         {
             db.Configuration.ProxyCreationEnabled = false;
