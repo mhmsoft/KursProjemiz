@@ -20,7 +20,7 @@
         @Html.LabelFor(model => model.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <select class="form-control" name="categoryId" id="categoryId" onchange="getsubCategories()">
-                <option selected>Bir Kategori seçin</option>
+                <option  value="0" selected>Bir Kategori seçin</option>
 
                 @foreach (var item in ViewBag.categories)
                 {
@@ -88,18 +88,10 @@
     <div class="form-group">
         @Html.LabelFor(model => model.productDesc, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextAreaFor(model => model.productDesc, new { htmlAttributes = new { @class = "form-control",id= "productDesc" } })
+            @Html.EditorFor(model => model.productDesc, new { htmlAttributes = new { @class = "form-control",id= "productDesc" } })
             @Html.ValidationMessageFor(model => model.productDesc, "", new { @class = "text-danger" })
             
-            <script type="text/javascript">
-              
-                    ClassicEditor
-                        .create(document.querySelector( '#productDesc' ) )
-                        .catch( error => {
-                        console.error(error);
-                    } );
-           
-            </script>
+            
         </div>
     </div>
 
@@ -136,17 +128,14 @@
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-       
         $("div#subCat").hide();
         getsubCategories = function () {
-            alert($("#categoryId").val());
+            //alert($("#categoryId").val());
             $.ajax({
                 url: "/Category/getsubCategories",
-               
                 data: { Id: $("#categoryId").val() },
                 success: function (response) {
                     if (response!=0) {
-                       
                         $("div#subCat").show();
                         $("div#subCat select").empty();
                         $.each(response, function (i, data) {
@@ -155,13 +144,10 @@
                                 $('<option></option>').val(data.categoryId).html(data.categoryName)
                             );
                         });
-
                     }
                     else  {
-                       
                         $("div#subCat").hide();
-                    }
-                       
+                    }     
                 }
             });
         }

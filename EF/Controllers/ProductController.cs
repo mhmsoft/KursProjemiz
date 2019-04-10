@@ -97,14 +97,30 @@ namespace EF.Controllers
                 products = db.product.Where(a => a.productId == id).FirstOrDefault(),
                 Imagelist = db.images.Where(a => a.productId == id).ToList()
             };
-            //başlangıçta Categori listesi viEw' e gönderiyoruz
-            ViewBag.categories = new SelectList(db.category,"categoryId","categoryName",pim.products.categoryId);
+
+
+            int maincat = pim.products.category.parentId??0;
+            if( maincat==0)
+            {
+                //başlangıçta Categori listesi viEw' e gönderiyoruz
+                ViewBag.categories = new SelectList(db.category.Where(x => x.parentId == 0).ToList(), "categoryId", "categoryName", pim.products.categoryId);
+            }
+            else
+            {
+                ViewBag.categories = new SelectList(db.category.Where(x => x.parentId == 0).ToList(), "categoryId", "categoryName", maincat);
+                ViewBag.subcategories = new SelectList(db.category.Where(x => x.parentId == maincat).ToList(), "categoryId", "categoryName", id);
+            }
+           
             ViewBag.brands = new SelectList(db.brand, "brandId", "brandName", pim.products.brandId);
             return View(pim);
         }
         [HttpPost]
-        public ActionResult Edit(ProductImageModel _productImage, IEnumerable<HttpPostedFileBase> img)
+        public ActionResult Edit(ProductImageModel _productImage, IEnumerable<HttpPostedFileBase> img, int? subCategoryId)
         {
+            if (subCategoryId != null)
+            {
+                _productImage.products.categoryId = subCategoryId;
+            }
             product _product= _productImage.products;
             db.Entry(_product).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
