@@ -173,14 +173,12 @@
         });
 
     $(document).ready(function () {
-        
            if(@Model.products.category.parentId != 0)
            {
                $("div#subCat").show(); 
               // $("div#subCat select").empty();
               
            }
-           
           else{ $("div#subCat").hide(); }
         
                getsubCategories = function () {
