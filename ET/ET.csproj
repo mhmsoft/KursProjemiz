@@ -258,6 +258,9 @@
     <Compile Include="Models\Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\slider.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\user.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -319,6 +322,7 @@
     <Content Include="Views\Default\Basket.cshtml" />
     <Content Include="Views\Default\CheckOut.cshtml" />
     <Content Include="Views\Account\MyOrders.cshtml" />
+    <Content Include="Views\Default\slider.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

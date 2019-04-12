@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ET.Models.slider>
+
+<div id="slider-carousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        @{
+            var first = true;
+        }
+        @foreach (var item in Model)
+        {
+            <li data-target="#slider-carousel" data-slide-to="0" class="@(first?Html.Raw("active"):Html.Raw(""))"></li>
+            first = false;
+        }
+
+    </ol>
+
+    <div class="carousel-inner">
+        @{
+            first = true;
+        }
+        @foreach (var item in Model)
+        {
+            <div class="item @(first?Html.Raw("active"):Html.Raw(""))">
+                <div class="col-sm-6">
+                    <h1><span>@item.caption</span></h1>
+                    <h2>@item.title</h2>
+                    <p>@item.description</p>
+                   
+                    <button type="button" class="btn btn-default get">Get it now</button>
+                </div>
+                <div class="col-sm-6">
+                    <img src="@Url.Action("ThumbnailSlider", "Default", new { width = 300, height = 276, Id = item.sliderId })" class="girl img-responsive" alt="" />
+                    <img src="~/Content/images/home/pricing.png" class="pricing" alt="" />
+                </div>
+            </div>
+            first = false;
+        }
+
+
+        </div>
+
+    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+        <i class="fa fa-angle-left"></i>
+    </a>
+    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+        <i class="fa fa-angle-right"></i>
+    </a>
+</div>

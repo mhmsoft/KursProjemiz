@@ -38,5 +38,6 @@ namespace EF.Models
         public virtual DbSet<product> product { get; set; }
         public virtual DbSet<wishlist> wishlist { get; set; }
         public virtual DbSet<orderDetails> orderDetails { get; set; }
+        public virtual DbSet<slider> slider { get; set; }
     }
 }

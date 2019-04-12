@@ -94,6 +94,17 @@
           <Property Name="roleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="roleName" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="slider">
+          <Key>
+            <PropertyRef Name="sliderId" />
+          </Key>
+          <Property Name="sliderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="caption" Type="varchar" MaxLength="50" />
+          <Property Name="title" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="255" />
+          <Property Name="price" Type="decimal" Precision="7" Scale="2" />
+          <Property Name="imagepath" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="user">
           <Key>
             <PropertyRef Name="userId" />
@@ -325,6 +336,7 @@
           <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="slider" EntityType="Self.slider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="userToaddress" EntityType="Self.userToaddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="wishlist" EntityType="Self.wishlist" Schema="dbo" store:Type="Tables" />
@@ -467,6 +479,7 @@
             <End Role="product" EntitySet="product" />
             <End Role="orderDetails" EntitySet="orderDetails" />
           </AssociationSet>
+          <EntitySet Name="slider" EntityType="MembershipModel.slider" />
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -807,6 +820,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="slider">
+          <Key>
+            <PropertyRef Name="sliderId" />
+          </Key>
+          <Property Name="sliderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="caption" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Decimal" Precision="7" Scale="2" />
+          <Property Name="imagepath" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -950,6 +974,18 @@
                 <ScalarProperty Name="productId" ColumnName="productId" />
                 <ScalarProperty Name="orderId" ColumnName="orderId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="slider">
+            <EntityTypeMapping TypeName="MembershipModel.slider">
+              <MappingFragment StoreEntitySet="slider">
+                <ScalarProperty Name="imagepath" ColumnName="imagepath" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="caption" ColumnName="caption" />
+                <ScalarProperty Name="sliderId" ColumnName="sliderId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

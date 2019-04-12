@@ -51,6 +51,37 @@ namespace ET.Controllers
 
             return PartialView(query);
         }
+
+        public PartialViewResult slider()
+        {
+
+            return PartialView(db.slider);
+        }
+        public ActionResult ThumbnailSlider(int width, int height, int Id)
+        {
+
+            var photo = db.slider.Find(Id).imagepath;
+            var base64 = Convert.ToBase64String(photo);
+            // Convert Base64 String to byte[]
+            byte[] imageBytes = Convert.FromBase64String(base64);
+            MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
+            // Convert byte[] to Image
+            ms.Write(imageBytes, 0, imageBytes.Length);
+            Image image = Image.FromStream(ms, true);
+
+            using (var newImage = new Bitmap(width, height))
+            using (var graphics = Graphics.FromImage(newImage))
+            using (var stream = new MemoryStream())
+            {
+                graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                graphics.DrawImage(image, new Rectangle(0, 0, width, height));
+                newImage.Save(stream, ImageFormat.Png);
+                return File(stream.ToArray(), "image/png");
+            }
+
+        }
         public PartialViewResult Search()
         {
             return PartialView();

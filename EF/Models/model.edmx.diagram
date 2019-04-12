@@ -33,6 +33,7 @@
         <EntityTypeShape EntityType="MembershipModel.orderDetails" Width="1.5" PointX="19.875" PointY="10.125" />
         <AssociationConnector Association="MembershipModel.FK__orderDeta__order__4CA06362" />
         <AssociationConnector Association="MembershipModel.FK__orderDeta__produ__4D94879B" />
+        <EntityTypeShape EntityType="MembershipModel.slider" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
