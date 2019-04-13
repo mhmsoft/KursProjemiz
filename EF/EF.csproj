@@ -1181,6 +1181,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\SliderController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1227,13 +1228,10 @@
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductImageModel.cs" />
-    <Compile Include="Models\properties.cs">
-      <DependentUpon>model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\propertyValues.cs">
-      <DependentUpon>model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Role.cs">
+      <DependentUpon>model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\slider.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\user.cs">
@@ -1244,7 +1242,6 @@
     </Compile>
     <Compile Include="Models\ViewModel\Account\UserAddress.cs" />
     <Compile Include="Models\ViewModel\Category\CatSubCat.cs" />
-    <Compile Include="Models\ViewModel\Product\productToproperty.cs" />
     <Compile Include="Models\wishlist.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
@@ -1274,7 +1271,10 @@
     <Content Include="Views\Brand\Delete.cshtml" />
     <Content Include="Views\Member\Index.cshtml" />
     <Content Include="Views\Member\Details.cshtml" />
-    <Content Include="Views\Product\addProperties.cshtml" />
+    <Content Include="Views\Slider\Create.cshtml" />
+    <Content Include="Views\Slider\Index.cshtml" />
+    <Content Include="Views\Slider\Edit.cshtml" />
+    <Content Include="Views\Slider\Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
