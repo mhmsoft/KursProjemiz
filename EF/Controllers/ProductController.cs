@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EF.Models;
-
+using EF.Models.ViewModel.Product;
 namespace EF.Controllers
 {
     public class ProductController : Controller
@@ -197,6 +197,21 @@ namespace EF.Controllers
             return  mesaj;
 
         }
+        public ActionResult addProperties()
+        {
+            productToproperty model = new productToproperty();
+            model.mainCategories=db.category.Where(x => x.parentId == 0).ToList();
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult addProperties(productToproperty model, IEnumerable<properties> prop)
+
+        {
+           
+            
+            return View(model);
+        }
+
 
     }
 }

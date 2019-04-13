@@ -1227,6 +1227,12 @@
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductImageModel.cs" />
+    <Compile Include="Models\properties.cs">
+      <DependentUpon>model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\propertyValues.cs">
+      <DependentUpon>model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Role.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
@@ -1238,6 +1244,7 @@
     </Compile>
     <Compile Include="Models\ViewModel\Account\UserAddress.cs" />
     <Compile Include="Models\ViewModel\Category\CatSubCat.cs" />
+    <Compile Include="Models\ViewModel\Product\productToproperty.cs" />
     <Compile Include="Models\wishlist.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
@@ -1267,6 +1274,7 @@
     <Content Include="Views\Brand\Delete.cshtml" />
     <Content Include="Views\Member\Index.cshtml" />
     <Content Include="Views\Member\Details.cshtml" />
+    <Content Include="Views\Product\addProperties.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

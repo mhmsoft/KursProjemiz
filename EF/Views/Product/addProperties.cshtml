@@ -1,0 +1,120 @@
+﻿@model EF.Models.ViewModel.Product.productToproperty
+
+@{
+    ViewBag.Title = "addProperties";
+
+}
+@{
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(
+        new SelectListItem { Text = "Text", Value = "Text", Selected = true });
+    listItems.Add(
+       new SelectListItem { Text = "Radio", Value = "Radio" });
+    listItems.Add(
+    new SelectListItem { Text = "Check", Value = "Check" });
+    listItems.Add(
+        new SelectListItem { Text = "Select", Value = "Select" });
+    };
+}
+
+
+<h2>addProperties</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>productToproperty</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.product.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.product.categoryId, new SelectList(Model.mainCategories, "categoryId", "categoryName"), htmlAttributes: new { @class = "form-control", @onchange = "getsubCategories()", id = "categoryId" })
+                @Html.ValidationMessageFor(model => model.product.categoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group" id="subCat">
+            @Html.LabelFor(model => model.product.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select class="form-control" name="subCategoryId" id="subCategoryId">
+                    <option value="0" selected>Bir Alt Kategori seçin</option>
+
+                </select>
+
+                @Html.ValidationMessageFor(model => model.product.categoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" id="addProperty" value="Add property" class="btn btn-default" />
+            </div>
+        </div>
+        <div id="properties">
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        alert();
+        $("div#subCat").hide();
+        getsubCategories = function () {
+            //alert($("#categoryId").val());
+            $.ajax({
+                url: "/Category/getsubCategories",
+                data: { Id: $("#categoryId").val() },
+                success: function (response) {
+                    if (response!=0) {
+                        $("div#subCat").show();
+                        $("div#subCat select").empty();
+                        $.each(response, function (i, data) {
+                           // alert(JSON.stringify(data));
+                            $("div#subCat select").append(
+                                $('<option></option>').val(data.categoryId).html(data.categoryName)
+                            );
+                        });
+                    }
+                    else  {
+                        $("div#subCat").hide();
+                    }
+                }
+            });
+        }
+        var propertyId=0
+        // Add property
+        $("#addProperty").click(function () {
+            var div=$("div#properties");
+           
+            div.append('<div class="form-group">');
+            div.append('<label class="control-label col-md-2">property Name</label>');
+            div.append('<div class="col-md-10">@Html.EditorFor(x => x.property[Model.property==null?1:Model.property.Count+1].propertyName,new { htmlAttributes = new { @class = "form-control" } })</div></div>');
+
+            div.append('<div class="form-group">');
+            div.append('<label class="control-label col-md-2">property Type</label>');
+            div.append('<div class="col-md-10"><select name=property[@Model.property==null?1:@Model.property.Count+1].propertyType" class="form-control"><option value="Text" selected>Text</option> ' +
+                '<option value="Check">Check</option>'+
+                '<option value="Radio">Radio</option>'+
+                '<option value="Select">Select</option></select></div></div></div>');
+              
+            
+               
+
+        });
+        //final add property
+    });
+
+</script>

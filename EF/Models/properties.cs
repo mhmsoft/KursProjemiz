@@ -12,18 +12,21 @@ namespace EF.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class brand
+    public partial class properties
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public brand()
+        public properties()
         {
-            this.product = new HashSet<product>();
+            this.propertyValues = new HashSet<propertyValues>();
         }
     
-        public int brandId { get; set; }
-        public string brandName { get; set; }
+        public int propertyId { get; set; }
+        public Nullable<int> productId { get; set; }
+        public string propertyName { get; set; }
+        public string propertyType { get; set; }
     
+        public virtual product product { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<product> product { get; set; }
+        public virtual ICollection<propertyValues> propertyValues { get; set; }
     }
 }

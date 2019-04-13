@@ -25,7 +25,7 @@ namespace EF.Controllers
                 categoryId = c.categoryId,
                 categoryName = c.categoryName,
                 subcategoryName = t.categoryName??string.Empty,
-                desc = c.categoryDesc
+                desc = c.description
 
             };
            
