@@ -7,18 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EF.Models
+namespace ET.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class slider
+    public partial class propertyValues
     {
-        public int sliderId { get; set; }
-        public string caption { get; set; }
-        public string title { get; set; }
-        public string description { get; set; }
-        public byte[] imagepath { get; set; }
-        public Nullable<decimal> price { get; set; }
+        public int ValueId { get; set; }
+        public Nullable<int> propertyId { get; set; }
+        public string ValueName { get; set; }
+    
+        public virtual properties properties { get; set; }
     }
 }

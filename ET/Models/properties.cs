@@ -12,13 +12,21 @@ namespace ET.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class wishlist
+    public partial class properties
     {
-        public int id { get; set; }
-        public Nullable<int> productId { get; set; }
-        public Nullable<int> userId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public properties()
+        {
+            this.propertyValues = new HashSet<propertyValues>();
+        }
     
-        public virtual user user { get; set; }
+        public int propertyId { get; set; }
+        public Nullable<int> productId { get; set; }
+        public string propertyName { get; set; }
+        public string propertyType { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<propertyValues> propertyValues { get; set; }
         public virtual product product { get; set; }
     }
 }

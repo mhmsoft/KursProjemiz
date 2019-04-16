@@ -1,4 +1,4 @@
-﻿@model EF.Models.ProductImageModel
+﻿@model EF.Models.product
 
 @{
     ViewBag.Title = "Edit";
@@ -17,37 +17,37 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.HiddenFor(model => model.products.productId)
+        @Html.HiddenFor(model => model.productId)
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.products.productName, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.productName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.products.productName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.productName, new { htmlAttributes = new { @class = "form-control" } })
 
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.products.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.category.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.products.categoryId, new SelectList(ViewBag.categories, "Value", "Text"), htmlAttributes: new { @class = "form-control", @onchange = "getsubCategories()", id = "categoryId" })
-            @Html.ValidationMessageFor(model => model.products.categoryId, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(model => model.category.categoryId, new SelectList(ViewBag.categories, "Value", "Text"), htmlAttributes: new { @class = "form-control", @onchange = "getsubCategories()", id = "categoryId" })
+            @Html.ValidationMessageFor(model => model.category.categoryId, "", new { @class = "text-danger" })
         </div>
     </div>
     @{ 
-        if (Model.products.category.parentId != 0)
+        if (Model.category.parentId != 0)
         {
     <div class="form-group" id="subCat">
-        @Html.LabelFor(model => model.products.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.category.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <select class="form-control" name="subCategoryId" id="subCategoryId">
                 @foreach (var item in ViewBag.subCategories)
                 {
-                    <option @(Model.products.categoryId==Int32.Parse(item.Value)? "selected":"") value="@item.Value">@item.Text</option>
+                    <option @(Model.categoryId==Int32.Parse(item.Value)? "selected":"") value="@item.Value">@item.Text</option>
                 }
 
             </select>
 
-            @Html.ValidationMessageFor(model => model.products.categoryId, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.category.categoryId, "", new { @class = "text-danger" })
         </div>
     </div>
         }
@@ -55,59 +55,72 @@
         else
         {
     <div class="form-group" id="subCat">
-        @Html.LabelFor(model => model.products.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <select class="form-control" name="subCategoryId" id="subCategoryId">
                 <option value="0" selected>Bir Alt Kategori seçin</option>
 
             </select>
 
-            @Html.ValidationMessageFor(model => model.products.categoryId, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.categoryId, "", new { @class = "text-danger" })
         </div>
     </div>
 
             }
         }
     <div class="form-group">
-        @Html.LabelFor(model => model.products.brandId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.brandId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.products.brandId, new SelectList(ViewBag.brands, "Value", "Text"),
+            @Html.DropDownListFor(model => model.brandId, new SelectList(ViewBag.brands, "Value", "Text"),
            htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.products.brandId, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.brandId, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.products.stock, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.stock, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.products.stock, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.stock, new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.products.price, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.price, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.products.price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.price, new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.products.productDesc, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.productDesc, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.products.productDesc, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.productDesc, new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.products.discount, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.discount, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.products.discount, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.discount, new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
+    @{  int i = 0; }
+        @foreach (var item in Model.category.properties)
+        {
+            i++;
+            <div class="form-group">
+                @Html.Label(item.propertyName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+             
+                    @Html.EditorFor(model=>item.propertyValues.SingleOrDefault(x=>x.propertyId==item.propertyId).ValueName, new { htmlAttributes = new { @class = "form-control", @Name = string.Format("properties[{0}].propertyValues.ValueName", i) } })
+                </div>
+            </div>
+        }
+
     <div class="form-group">
-        @Html.LabelFor(model => model.Image.imagepath, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Resim", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <input type="file" multiple="multiple" name="img" />
         </div>
     </div>
     <div class="form-group">
-        @foreach (var item in Model.Imagelist)
+        @foreach (var item in Model.images)
         {
             <div id="img-div" class="col-md-2" style="float:left; margin:5px;width:100px;height:80px; margin-bottom:20px;">
 
@@ -173,7 +186,7 @@
         });
 
     $(document).ready(function () {
-           if(@Model.products.category.parentId != 0)
+           if(@Model.category.parentId != 0)
            {
                $("div#subCat").show(); 
               // $("div#subCat select").empty();

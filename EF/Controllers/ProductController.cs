@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EF.Models;
-using EF.Models.ViewModel.Product;
+using EF.Models.ViewModel.Category;
 namespace EF.Controllers
 {
     public class ProductController : Controller
@@ -39,17 +39,23 @@ namespace EF.Controllers
         
         
         [HttpPost]
-        public ActionResult Create(product _product,IEnumerable<HttpPostedFileBase> img,int?subCategoryId)
+        public ActionResult Create(productToproperty _product,IEnumerable<HttpPostedFileBase> img,int subCategoryId,propertyValues[] propertyValues)
         {
             if (subCategoryId != null)
             {
-                _product.categoryId = subCategoryId;
+                _product.product.categoryId = subCategoryId;
             }
-            db.product.Add(_product);
+            db.product.Add(_product.product);
             db.SaveChanges();
+            foreach (var item in _product.propertyValues)
+            {
+                db.propertyValues.Add(item);
+                db.SaveChanges();
+            }
+           
 
             images new_img = new images();
-            new_img.productId = _product.productId;
+            new_img.productId = _product.product.productId;
             new_img.isShow = false;
             if (img.First() != null)
             {
@@ -92,18 +98,19 @@ namespace EF.Controllers
         }
         public ActionResult Edit(int id)
         {
-            ProductImageModel pim = new ProductImageModel()
-            {
-                products = db.product.Where(a => a.productId == id).FirstOrDefault(),
-                Imagelist = db.images.Where(a => a.productId == id).ToList()
-            };
+            /* ProductImageModel pim = new ProductImageModel()
+             {
+                 products = db.product.Where(a => a.productId == id).FirstOrDefault(),
+                 Imagelist = db.images.Where(a => a.productId == id).ToList()
+             };
+             */
+            product prod = db.product.Where(a => a.productId == id).FirstOrDefault();
 
-
-            int maincat = pim.products.category.parentId??0;
+            int maincat = prod.category.parentId??0;
             if( maincat==0)
             {
                 //başlangıçta Categori listesi viEw' e gönderiyoruz
-                ViewBag.categories = new SelectList(db.category.Where(x => x.parentId == 0).ToList(), "categoryId", "categoryName", pim.products.categoryId);
+                ViewBag.categories = new SelectList(db.category.Where(x => x.parentId == 0).ToList(), "categoryId", "categoryName", prod.categoryId);
             }
             else
             {
@@ -111,24 +118,38 @@ namespace EF.Controllers
                 ViewBag.subcategories = new SelectList(db.category.Where(x => x.parentId == maincat).ToList(), "categoryId", "categoryName", id);
             }
            
-            ViewBag.brands = new SelectList(db.brand, "brandId", "brandName", pim.products.brandId);
-            return View(pim);
+            ViewBag.brands = new SelectList(db.brand, "brandId", "brandName", prod.brandId);
+            return View(prod);
         }
         [HttpPost]
-        public ActionResult Edit(ProductImageModel _productImage, IEnumerable<HttpPostedFileBase> img, int? subCategoryId)
+        public ActionResult Edit(product product, IEnumerable<HttpPostedFileBase> img, int? subCategoryId)
         {
+
             if (subCategoryId != null)
             {
-                _productImage.products.categoryId = subCategoryId;
+                product.categoryId = subCategoryId;
             }
-            product _product= _productImage.products;
-            db.Entry(_product).State = System.Data.Entity.EntityState.Modified;
+           // product updates
+            db.Entry(product).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
+            // property Value updates
+            if (product.category.properties.First()!=null)
+            {
+                foreach (var item in product.category.properties)
+                {
+                    propertyValues pv = item.propertyValues.SingleOrDefault(p => p.propertyId == item.propertyId);
+                    db.Entry(pv).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+           
+            
+
             if (img.First() != null)
             {
                 images new_img = new images();
                 new_img.isShow = false;
-                new_img.productId = _product.productId;
+                new_img.productId = product.productId;
                 foreach (var item in img)
                 {
                     using (var br = new BinaryReader(item.InputStream))
@@ -171,12 +192,9 @@ namespace EF.Controllers
                 islem = "Silme işlemi Yapıldı";
             }
             return islem;
-            
-
         }
         public string SetDefaultImage(int image_id,int product_Id)
         {
-
             List<images> allImages = db.images.Where(x=>x.productId==product_Id).ToList();
 
             foreach (var item in allImages)
@@ -195,23 +213,6 @@ namespace EF.Controllers
                 mesaj = "değişlikler yapıldı";
             }
             return  mesaj;
-
         }
-        public ActionResult addProperties()
-        {
-            productToproperty model = new productToproperty();
-            model.mainCategories=db.category.Where(x => x.parentId == 0).ToList();
-            return View(model);
-        }
-        [HttpPost]
-        public ActionResult addProperties(productToproperty model, IEnumerable<properties> prop)
-
-        {
-           
-            
-            return View(model);
-        }
-
-
     }
 }

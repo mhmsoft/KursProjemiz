@@ -39,8 +39,6 @@ namespace EF.Controllers
                         db.slider.Add(slider);
                         db.SaveChanges();
                     }
-
-
                 }
             }
           
@@ -69,6 +67,8 @@ namespace EF.Controllers
                     db.SaveChanges();
 
                 }
+                db.Entry(slider).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
             }
 
             return RedirectToAction("Index");

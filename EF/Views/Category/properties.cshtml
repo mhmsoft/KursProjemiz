@@ -1,0 +1,38 @@
+﻿@model IEnumerable<EF.Models.properties>
+
+@{
+    ViewBag.Title = "properties";
+}
+<h2></h2>
+
+<p>
+    @Html.ActionLink("Create New Properties", "addProperties",new { id=ViewBag.id})
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.propertyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.propertyType)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.propertyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.propertyType)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {  id=item.propertyId }) |
+            @Html.ActionLink("Details", "Details", new {  id=item.propertyId  }) |
+            @Html.ActionLink("Delete", "Delete", new {  id=item.propertyId  })
+        </td>
+    </tr>
+}
+
+</table>

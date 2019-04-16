@@ -1228,6 +1228,12 @@
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductImageModel.cs" />
+    <Compile Include="Models\properties.cs">
+      <DependentUpon>model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\propertyValues.cs">
+      <DependentUpon>model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Role.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
@@ -1242,6 +1248,7 @@
     </Compile>
     <Compile Include="Models\ViewModel\Account\UserAddress.cs" />
     <Compile Include="Models\ViewModel\Category\CatSubCat.cs" />
+    <Compile Include="Models\ViewModel\Category\productToproperty.cs" />
     <Compile Include="Models\wishlist.cs">
       <DependentUpon>model.tt</DependentUpon>
     </Compile>
@@ -1275,6 +1282,8 @@
     <Content Include="Views\Slider\Index.cshtml" />
     <Content Include="Views\Slider\Edit.cshtml" />
     <Content Include="Views\Slider\Delete.cshtml" />
+    <Content Include="Views\Category\addProperties.cshtml" />
+    <Content Include="Views\Category\properties.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1285,6 +1294,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\uploads\" />
+    <Folder Include="Models\ViewModel\NewFolder1\" />
+    <Folder Include="Models\ViewModel\Product\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

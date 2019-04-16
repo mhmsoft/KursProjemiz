@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="4222e29665a047d78da5589768c11d1d" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="MembershipModel.address" Width="1.5" PointX="5.25" PointY="5.125" />
-        <EntityTypeShape EntityType="MembershipModel.brand" Width="1.5" PointX="5.25" PointY="10.5" />
         <EntityTypeShape EntityType="MembershipModel.city" Width="1.5" PointX="0.75" PointY="5.625" />
         <EntityTypeShape EntityType="MembershipModel.district" Width="1.5" PointX="3" PointY="5.5" />
         <EntityTypeShape EntityType="MembershipModel.orders" Width="1.5" PointX="9.75" PointY="8.25" />
@@ -21,19 +20,24 @@
         <AssociationConnector Association="MembershipModel.FK__orders__customer__5CD6CB2B" />
         <AssociationConnector Association="MembershipModel.FK__user__roleId__34C8D9D1" />
         <AssociationConnector Association="MembershipModel.FK__userToadd__userI__412EB0B6" />
-        <EntityTypeShape EntityType="MembershipModel.category" Width="1.5" PointX="5.25" PointY="13.375" />
         <EntityTypeShape EntityType="MembershipModel.images" Width="1.5" PointX="9.75" PointY="17" />
         <EntityTypeShape EntityType="MembershipModel.orderDetails" Width="1.5" PointX="12" PointY="10.125" />
-        <EntityTypeShape EntityType="MembershipModel.product" Width="1.5" PointX="7.5" PointY="10.5" />
-        <AssociationConnector Association="MembershipModel.FK__product__brandId__2E1BDC42" />
-        <AssociationConnector Association="MembershipModel.FK__product__categor__267ABA7A" />
-        <AssociationConnector Association="MembershipModel.FK__images__productI__2A4B4B5E" />
         <AssociationConnector Association="MembershipModel.FK__orderDeta__order__4CA06362" />
-        <AssociationConnector Association="MembershipModel.FK__orderDeta__produ__4D94879B" />
         <EntityTypeShape EntityType="MembershipModel.wishlist" Width="1.5" PointX="9.75" PointY="11" />
-        <AssociationConnector Association="MembershipModel.FK__wishlist__produc__4316F928" />
         <AssociationConnector Association="MembershipModel.FK__wishlist__userId__440B1D61" />
+        <EntityTypeShape EntityType="MembershipModel.properties" Width="1.5" PointX="9.75" PointY="20.375" />
+        <EntityTypeShape EntityType="MembershipModel.propertyValues" Width="1.5" PointX="12" PointY="20.5" />
+        <AssociationConnector Association="MembershipModel.FK__propertyV__prope__72C60C4A" />
+        <EntityTypeShape EntityType="MembershipModel.product" Width="1.5" PointX="7.5" PointY="11.125" />
+        <AssociationConnector Association="MembershipModel.FK__images__productI__182C9B23" />
+        <AssociationConnector Association="MembershipModel.FK__orderDeta__produ__6383C8BA" />
+        <AssociationConnector Association="MembershipModel.FK__propertie__produ__6FE99F9F" />
+        <AssociationConnector Association="MembershipModel.FK__wishList__produc__47DBAE45" />
+        <EntityTypeShape EntityType="MembershipModel.brand" Width="1.5" PointX="5.625" PointY="10.75" />
+        <EntityTypeShape EntityType="MembershipModel.category" Width="1.5" PointX="5.625" PointY="13.25" />
         <EntityTypeShape EntityType="MembershipModel.slider" Width="1.5" PointX="0.75" PointY="0.75" />
+        <AssociationConnector Association="MembershipModel.FK__product__brandId__15502E78" />
+        <AssociationConnector Association="MembershipModel.FK__product__categor__145C0A3F" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

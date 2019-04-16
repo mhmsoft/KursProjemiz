@@ -1,4 +1,4 @@
-﻿@model EF.Models.ViewModel.Product.productToproperty
+﻿@model EF.Models.ViewModel.Category.productToproperty
 
 @{
     ViewBag.Title = "addProperties";
@@ -14,46 +14,36 @@
     new SelectListItem { Text = "Check", Value = "Check" });
     listItems.Add(
         new SelectListItem { Text = "Select", Value = "Select" });
-    };
-}
+    }
 
 
-<h2>addProperties</h2>
 
-@using (Html.BeginForm())
+<h2>@Model.category.categoryName</h2>
+
+@using (Html.BeginForm("addProperties","Category",FormMethod.Post,new {@id="myform" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>productToproperty</h4>
+       
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(x=>x.category.categoryId);
         <div class="form-group">
-            @Html.LabelFor(model => model.product.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.property.propertyName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.product.categoryId, new SelectList(Model.mainCategories, "categoryId", "categoryName"), htmlAttributes: new { @class = "form-control", @onchange = "getsubCategories()", id = "categoryId" })
-                @Html.ValidationMessageFor(model => model.product.categoryId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group" id="subCat">
-            @Html.LabelFor(model => model.product.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select class="form-control" name="subCategoryId" id="subCategoryId">
-                    <option value="0" selected>Bir Alt Kategori seçin</option>
-
-                </select>
-
-                @Html.ValidationMessageFor(model => model.product.categoryId, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.property.propertyName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.property.propertyName, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" id="addProperty" value="Add property" class="btn btn-default" />
+            @Html.LabelFor(model => model.property.propertyType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.property.propertyType, new SelectList(listItems, "Value", "Text"), htmlAttributes: new { @class = "form-control", @onchange = "getsubCategories()", id = "categoryId" })
+                @Html.ValidationMessageFor(model => model.property.propertyType, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div id="properties">
 
-        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -69,8 +59,8 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        alert();
+    /*$(document).ready(function () {
+        //alert();
         $("div#subCat").hide();
         getsubCategories = function () {
             //alert($("#categoryId").val());
@@ -96,25 +86,41 @@
         }
         var propertyId=0
         // Add property
-        $("#addProperty").click(function () {
-            var div=$("div#properties");
-           
+  /* $("#myform").submit(function(e) {
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+        var form = $(this);
+        var url = form.attr('action');
+        $.ajax({
+               type: "POST",
+               url: url,
+               data: form.serialize(), // serializes the form's elements.
+               success: function(data)
+               {
+                   alert(data); // show response from the php script.
+               }
+             });
+    });
+    */
+
+
+            /*var div=$("div#properties");
+            propertyId++;
             div.append('<div class="form-group">');
             div.append('<label class="control-label col-md-2">property Name</label>');
-            div.append('<div class="col-md-10">@Html.EditorFor(x => x.property[Model.property==null?1:Model.property.Count+1].propertyName,new { htmlAttributes = new { @class = "form-control" } })</div></div>');
+            div.append('<div class="col-md-10"><input type="text" name="ozellik[' + propertyId + '].propertyName" id=name=ozellik[' + propertyId + '].propertyName" class="form-control" /></div></div>');
+
 
             div.append('<div class="form-group">');
             div.append('<label class="control-label col-md-2">property Type</label>');
-            div.append('<div class="col-md-10"><select name=property[@Model.property==null?1:@Model.property.Count+1].propertyType" class="form-control"><option value="Text" selected>Text</option> ' +
+            div.append('<div class="col-md-10"><select name=ozellik[' + propertyId + '].propertyType" id=name=ozellik[' + propertyId + '].propertyType" class="form-control"><option value="Text" selected>Text</option> ' +
                 '<option value="Check">Check</option>'+
                 '<option value="Radio">Radio</option>'+
                 '<option value="Select">Select</option></select></div></div></div>');
-              
-            
-               
 
-        });
-        //final add property
+
+
+
+      
     });
-
+   */
 </script>

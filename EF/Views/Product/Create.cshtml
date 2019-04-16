@@ -1,12 +1,10 @@
-﻿@model EF.Models.product
+﻿@model EF.Models.ViewModel.Category.productToproperty
 
 @{
     ViewBag.Title = "Create";
 }
 
 <h2>Create</h2>
-
-
 @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -17,7 +15,7 @@
 
 
     <div class="form-group">
-        @Html.LabelFor(model => model.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.category.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <select class="form-control" name="categoryId" id="categoryId" onchange="getsubCategories()">
                 <option  value="0" selected>Bir Kategori seçin</option>
@@ -28,22 +26,22 @@
                 }
             </select>
 
-            @Html.ValidationMessageFor(model => model.categoryId, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.category.categoryId, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group"id="subCat">
-        @Html.LabelFor(model => model.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.category.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            <select class="form-control" name="subCategoryId" id="subCategoryId">
+            <select class="form-control" name="subCategoryId" id="subCategoryId" onchange="getProperties()">
                 <option selected>Bir Alt Kategori seçin</option>
 
             </select>
 
-            @Html.ValidationMessageFor(model => model.categoryId, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.category.categoryId, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.brandId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.product.brandId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <select class="form-control" name="brandId">
                 <option selected>Bir Kategori seçin</option>
@@ -54,60 +52,62 @@
                 }
             </select>
 
-            @Html.ValidationMessageFor(model => model.brandId, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.product.brandId, "", new { @class = "text-danger" })
         </div>
     </div>
 
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(model => model.productName, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.product.productName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.productName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.productName, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.product.productName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.product.productName, "", new { @class = "text-danger" })
         </div>
     </div>
 
 
     <div class="form-group">
-        @Html.LabelFor(model => model.stock, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.product.stock, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.stock, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.stock, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.product.stock, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.product.stock, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.price, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.product.price, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.price, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.product.price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.product.price, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.productDesc, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.product.productDesc, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.productDesc, new { htmlAttributes = new { @class = "form-control",id= "productDesc" } })
-            @Html.ValidationMessageFor(model => model.productDesc, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.product.productDesc, new { htmlAttributes = new { @class = "form-control",id= "productDesc" } })
+            @Html.ValidationMessageFor(model => model.product.productDesc, "", new { @class = "text-danger" })
             
             
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.discount, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.product.discount, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.discount, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.discount, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.product.discount, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.product.discount, "", new { @class = "text-danger" })
         </div>
     </div>
+    <div id="properties">
 
+    </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.images, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.product.images, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <input type="file" name="img" multiple="multiple" />
-            @Html.ValidationMessageFor(model => model.images, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.product.images, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -128,6 +128,25 @@
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+
+        // get properties
+        getProperties = function () {
+            $.ajax({
+                url: "/Category/getProperties",
+                data: { Id: $("#subCategoryId").val() },
+                success: function (response) {
+                    if (response != 0) {
+                        $.each(response, function (i, data) {
+                            $("div#properties").append('<div class="form-group"><label class="control-label col-md-2">' + data.propertyName + '</label><div class="col-md-10"><input type="text" id="propertyValues[' + i + '].propertyId" name=q"propertyValues[' + i + '].propertyId" value="' + data.propertyId + '" /><input type="' + data.propertyType + '" class="form-control" name="propertyValues[' + i + '].ValueName" id="propertyValues[' + i + '].ValueName" /></div></div>');
+                        });
+                    }
+                    else
+                        $("div#properties").empty();
+                }
+            });
+        }
+
+
         $("div#subCat").hide();
         getsubCategories = function () {
             //alert($("#categoryId").val());
@@ -147,7 +166,22 @@
                     }
                     else  {
                         $("div#subCat").hide();
-                    }     
+                    }
+                }
+            });
+            // get properties
+            $.ajax({
+                url: "/Category/getProperties",
+                data: { Id: $("#categoryId").val() },
+                success: function (response) {
+                    if (response != 0) {
+                        $.each(response, function (i, data) {
+                            $("div#properties").append('<div class="form-group"><label class="control-label col-md-2">' + data.propertyName + '</label><div class="col-md-10"><input type="' + data.propertyType + '" class="form-control" name="property[' + i + '].propertyName" /></div></div>');
+                        });
+
+                    }
+                    else
+                        $("div#properties").empty();
                 }
             });
         }

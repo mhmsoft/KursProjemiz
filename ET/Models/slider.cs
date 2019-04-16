@@ -18,7 +18,7 @@ namespace ET.Models
         public string caption { get; set; }
         public string title { get; set; }
         public string description { get; set; }
-        public Nullable<decimal> price { get; set; }
         public byte[] imagepath { get; set; }
+        public Nullable<decimal> price { get; set; }
     }
 }

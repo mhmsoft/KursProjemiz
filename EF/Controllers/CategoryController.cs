@@ -25,7 +25,7 @@ namespace EF.Controllers
                 categoryId = c.categoryId,
                 categoryName = c.categoryName,
                 subcategoryName = t.categoryName??string.Empty,
-                desc = c.description
+                desc = c.categoryDesc
 
             };
            
@@ -109,5 +109,66 @@ namespace EF.Controllers
             return RedirectToAction("Index");
 
         }
+
+        public ActionResult getProperties(int Id)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var result = db.properties.Where(x => x.categoryId == Id).ToList();
+            if (result != null)
+                return Json(result, JsonRequestBehavior.AllowGet);
+            else
+                return Content("0");
+        }
+        public ActionResult addProperties(int id)
+        {
+            productToproperty model = new productToproperty();
+           // model.mainCategories = db.category.Where(x => x.parentId == 0).ToList();
+            model.category = db.category.FirstOrDefault(x=>x.categoryId==id);
+            return View(model);
+        }
+
+        public ActionResult GetproductsByCategoryId(int Id)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var result = db.product.Where(x => x.categoryId == Id).ToList();
+            if (result != null)
+                return Json(result, JsonRequestBehavior.AllowGet);
+            else
+                return Content("0");
+        }
+        public ActionResult properties(int? id)
+        {
+            ViewBag.id = id;
+            return View(db.properties.Where(p => p.categoryId == id).ToList());
+        }
+
+        [HttpPost]
+        public ActionResult addProperties(productToproperty model)
+        {
+            productToproperty listModel = new productToproperty();
+
+            if (ModelState.IsValid)
+            {
+
+                properties prop = new properties()
+                {
+                    categoryId =  model.category.categoryId,
+                    propertyName = model.property.propertyName,
+                    propertyType = model.property.propertyType
+                };
+                db.properties.Add(prop);
+                db.SaveChanges();
+
+                // List<properties> listOfproperty = db.properties.ToList();
+
+                listModel.mainCategories = db.category.Where(x => x.parentId == 0).ToList();
+                listModel.properties = db.properties.ToList();
+            }
+            return RedirectToAction("properties",new { id= model.category.categoryId });
+                
+        }
+
+
+
     }
 }
