@@ -20,6 +20,7 @@ namespace EF.Models
             this.images = new HashSet<images>();
             this.orderDetails = new HashSet<orderDetails>();
             this.wishlist = new HashSet<wishlist>();
+            this.propertyValues = new HashSet<propertyValues>();
         }
     
         public int productId { get; set; }
@@ -30,6 +31,7 @@ namespace EF.Models
         public Nullable<decimal> price { get; set; }
         public Nullable<decimal> discount { get; set; }
         public string productDesc { get; set; }
+        public string image { get; set; }
     
         public virtual brand brand { get; set; }
         public virtual category category { get; set; }
@@ -39,5 +41,7 @@ namespace EF.Models
         public virtual ICollection<orderDetails> orderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<wishlist> wishlist { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual IEnumerable<propertyValues> propertyValues { get; set; }
     }
 }

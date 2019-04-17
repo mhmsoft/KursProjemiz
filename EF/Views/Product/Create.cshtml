@@ -137,7 +137,7 @@
                 success: function (response) {
                     if (response != 0) {
                         $.each(response, function (i, data) {
-                            $("div#properties").append('<div class="form-group"><label class="control-label col-md-2">' + data.propertyName + '</label><div class="col-md-10"><input type="text" id="propertyValues[' + i + '].propertyId" name=q"propertyValues[' + i + '].propertyId" value="' + data.propertyId + '" /><input type="' + data.propertyType + '" class="form-control" name="propertyValues[' + i + '].ValueName" id="propertyValues[' + i + '].ValueName" /></div></div>');
+                            $("div#properties").append('<div class="form-group"><label class="control-label col-md-2">' + data.propertyName + '</label><div class="col-md-10"><input type="text" id="propertyValues[' + i + '].propertyId" name="propertyValues[' + i + '].propertyId" value="' + data.propertyId + '" /><input type="' + data.propertyType + '" class="form-control" name="propertyValues[' + i + '].ValueName" id="propertyValues[' + i + '].ValueName" /></div></div>');
                         });
                     }
                     else
@@ -176,9 +176,8 @@
                 success: function (response) {
                     if (response != 0) {
                         $.each(response, function (i, data) {
-                            $("div#properties").append('<div class="form-group"><label class="control-label col-md-2">' + data.propertyName + '</label><div class="col-md-10"><input type="' + data.propertyType + '" class="form-control" name="property[' + i + '].propertyName" /></div></div>');
+                            $("div#properties").append('<div class="form-group"><label class="control-label col-md-2">' + data.propertyName + '</label><div class="col-md-10"><input type="text" id="propertyValues[' + i + '].propertyId" name="propertyValues[' + i + '].propertyId" value="' + data.propertyId + '" /><input type="' + data.propertyType + '" class="form-control" name="propertyValues[' + i + '].ValueName" id="propertyValues[' + i + '].ValueName" /></div></div>');
                         });
-
                     }
                     else
                         $("div#properties").empty();

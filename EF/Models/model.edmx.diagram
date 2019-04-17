@@ -7,7 +7,7 @@
       <Diagram DiagramId="0bd78673cb03453887392c31a64831be" Name="Diagram1" ZoomLevel="59">
         <EntityTypeShape EntityType="MembershipModel.address" Width="1.5" PointX="5.25" PointY="7" />
         <EntityTypeShape EntityType="MembershipModel.brand" Width="1.5" PointX="5.25" PointY="14.875" />
-        <EntityTypeShape EntityType="MembershipModel.category" Width="1.5" PointX="5.25" PointY="12" />
+        <EntityTypeShape EntityType="MembershipModel.category" Width="1.5" PointX="4.25" PointY="11.875" />
         <EntityTypeShape EntityType="MembershipModel.city" Width="1.5" PointX="0.75" PointY="5.625" />
         <EntityTypeShape EntityType="MembershipModel.district" Width="1.5" PointX="3" PointY="9" />
         <EntityTypeShape EntityType="MembershipModel.images" Width="1.5" PointX="9.75" PointY="13.375" />
@@ -38,6 +38,7 @@
         <AssociationConnector Association="MembershipModel.FK__user__roleId__34C8D9D1" />
         <AssociationConnector Association="MembershipModel.FK__userToadd__userI__412EB0B6" />
         <AssociationConnector Association="MembershipModel.FK__wishList__userId__48CFD27E" />
+        <AssociationConnector Association="MembershipModel.FK__propertyV__produ__628FA481" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

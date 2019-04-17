@@ -49,6 +49,8 @@ namespace EF.Controllers
             db.SaveChanges();
             foreach (var item in _product.propertyValues)
             {
+                item.productId = _product.product.productId;
+                
                 db.propertyValues.Add(item);
                 db.SaveChanges();
             }
@@ -104,13 +106,13 @@ namespace EF.Controllers
                  Imagelist = db.images.Where(a => a.productId == id).ToList()
              };
              */
-            product prod = db.product.Where(a => a.productId == id).FirstOrDefault();
-
-            int maincat = prod.category.parentId??0;
+            product productModel = db.product.Where(a => a.productId == id).FirstOrDefault();
+           
+            int maincat = productModel.category.parentId??0;
             if( maincat==0)
             {
                 //başlangıçta Categori listesi viEw' e gönderiyoruz
-                ViewBag.categories = new SelectList(db.category.Where(x => x.parentId == 0).ToList(), "categoryId", "categoryName", prod.categoryId);
+                ViewBag.categories = new SelectList(db.category.Where(x => x.parentId == 0).ToList(), "categoryId", "categoryName", productModel.categoryId);
             }
             else
             {
@@ -118,38 +120,36 @@ namespace EF.Controllers
                 ViewBag.subcategories = new SelectList(db.category.Where(x => x.parentId == maincat).ToList(), "categoryId", "categoryName", id);
             }
            
-            ViewBag.brands = new SelectList(db.brand, "brandId", "brandName", prod.brandId);
-            return View(prod);
+            ViewBag.brands = new SelectList(db.brand, "brandId", "brandName", productModel.brandId);
+            return View(productModel);
         }
         [HttpPost]
-        public ActionResult Edit(product product, IEnumerable<HttpPostedFileBase> img, int? subCategoryId)
+        public ActionResult Edit(product productModel, IEnumerable<HttpPostedFileBase> img, int? subCategoryId, ICollection<propertyValues> propertyValues)
         {
 
             if (subCategoryId != null)
             {
-                product.categoryId = subCategoryId;
+                productModel.categoryId = subCategoryId;
             }
            // product updates
-            db.Entry(product).State = System.Data.Entity.EntityState.Modified;
+            db.Entry(productModel).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
             // property Value updates
-            if (product.category.properties.First()!=null)
+            if (productModel.propertyValues.First()!=null)
             {
-                foreach (var item in product.category.properties)
+                foreach (var item in productModel.propertyValues)
                 {
-                    propertyValues pv = item.propertyValues.SingleOrDefault(p => p.propertyId == item.propertyId);
-                    db.Entry(pv).State = System.Data.Entity.EntityState.Modified;
+                   
+                    db.Entry(item).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                 }
             }
            
-            
-
             if (img.First() != null)
             {
                 images new_img = new images();
                 new_img.isShow = false;
-                new_img.productId = product.productId;
+                new_img.productId = productModel.productId;
                 foreach (var item in img)
                 {
                     using (var br = new BinaryReader(item.InputStream))

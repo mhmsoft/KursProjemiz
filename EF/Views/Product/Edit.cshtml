@@ -27,17 +27,17 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.category.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.category.categoryId, new SelectList(ViewBag.categories, "Value", "Text"), htmlAttributes: new { @class = "form-control", @onchange = "getsubCategories()", id = "categoryId" })
-            @Html.ValidationMessageFor(model => model.category.categoryId, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(model => model.categoryId, new SelectList(ViewBag.categories, "Value", "Text"), htmlAttributes: new { @class = "form-control", @onchange = "getsubCategories()", id = "categoryId" })
+            @Html.ValidationMessageFor(model => model.categoryId, "", new { @class = "text-danger" })
         </div>
     </div>
     @{ 
         if (Model.category.parentId != 0)
         {
     <div class="form-group" id="subCat">
-        @Html.LabelFor(model => model.category.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <select class="form-control" name="subCategoryId" id="subCategoryId">
                 @foreach (var item in ViewBag.subCategories)
@@ -47,7 +47,7 @@
 
             </select>
 
-            @Html.ValidationMessageFor(model => model.category.categoryId, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.categoryId, "", new { @class = "text-danger" })
         </div>
     </div>
         }
@@ -101,14 +101,17 @@
         </div>
     </div>
     @{  int i = 0; }
-        @foreach (var item in Model.category.properties)
+        @foreach (var item in Model.propertyValues)
         {
             i++;
             <div class="form-group">
-                @Html.Label(item.propertyName, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label(item.properties.propertyName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-             
-                    @Html.EditorFor(model=>item.propertyValues.SingleOrDefault(x=>x.propertyId==item.propertyId).ValueName, new { htmlAttributes = new { @class = "form-control", @Name = string.Format("properties[{0}].propertyValues.ValueName", i) } })
+                    @Html.HiddenFor(model => item.propertyId)
+                    <input type="text" value="@item.propertyId" name="propertyValues[@i].propertyId" id="propertyValues[@i].propertyId" />
+                    @Html.EditorFor(model => item.ValueName, new { htmlAttributes = new { @class = "form-control", @Name = string.Format("propertyValues[{0}].ValueName", i) } })
+                    <input type="text" value="@item.ValueName" name="propertyValues[@i].ValueName" id="propertyValues[@i].ValueName" />
+
                 </div>
             </div>
         }
