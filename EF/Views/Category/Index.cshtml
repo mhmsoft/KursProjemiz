@@ -4,24 +4,24 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h4>Kategoriler</h4>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Yeni Kategori", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("Category Id")
+            @Html.DisplayName("Kategori No")
         </th>
         <th>
-            @Html.DisplayName("Category Name")
+            @Html.DisplayName("Kategori")
         </th>
         <th>
-            @Html.DisplayName("Sub Category Name")
+            @Html.DisplayName("Alt Kategori")
         </th>
         <th>
-            @Html.DisplayName("Description")
+            @Html.DisplayName("Açıklama")
         </th>
         <th></th>
     </tr>
@@ -41,10 +41,10 @@
             @Html.DisplayFor(modelItem => item.desc)
         </td>
         <td>
-            @Html.ActionLink("Properties", "properties", new { id = item.categoryId }) |
-            @Html.ActionLink("Edit", "Edit", new { id = item.categoryId }) |
+            @Html.ActionLink("Özellikler", "properties", new { id = item.categoryId }) |
+            @Html.ActionLink("Değiştir", "Edit", new { id = item.categoryId }) |
 
-            @Html.ActionLink("Delete", "Delete", new { id = item.categoryId })
+            @Html.ActionLink("Sil", "Delete", new { id = item.categoryId })
         </td>
     </tr>
 }

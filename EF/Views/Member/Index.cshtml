@@ -4,34 +4,34 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Members</h2>
+<h4 style="text-align:center">Üyeler</h4>
 
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("Role")
+            @Html.DisplayName("Rol")
         </th>
         <th>
-            @Html.DisplayName("User Name")
+            @Html.DisplayName("Kullanıcı Adı")
         </th>
         <th>
-            @Html.DisplayName("First Name")
+            @Html.DisplayName("Ad")
         </th>
         <th>
-            @Html.DisplayName("Last Name")
+            @Html.DisplayName("Soyad")
         </th>
         <th>
-            @Html.DisplayName("isMailVerified")
+            @Html.DisplayName("Mail Doğrulaması")
         </th>
         <th>
-            @Html.DisplayName("LoginAttempt")
+            @Html.DisplayName("Login Denemesi")
         </th>
         <th>
-            @Html.DisplayName("Login Time")
+            @Html.DisplayName("Login Zamanı")
         </th>
         <th>
-            @Html.DisplayName("Member Status")
+            @Html.DisplayName("Üyelik Durumu")
         </th>
         <th></th>
     </tr>
@@ -65,9 +65,9 @@
         </td>
 
         <td>
-            @Html.ActionLink("Edit", "Edit", new { userId = item.user.userId }) |
-            @Html.ActionLink("Detail", "Details", new { userId = item.user.userId })
-            @Html.ActionLink("Delete", "Delete", new { userId = item.user.userId })
+            @Html.ActionLink("Değiştir", "Edit", new { id = item.user.userId }) |
+            @Html.ActionLink("Adres Bilgisi", "Details", new { id = item.user.userId })
+            @Html.ActionLink("Sil", "Delete", new { id = item.user.userId })
         </td>
     </tr>
     }

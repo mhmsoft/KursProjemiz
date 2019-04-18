@@ -24,7 +24,7 @@ namespace EF.Controllers
                          };
             return View(result);
         }
-        public ActionResult Details(int userId)
+        public ActionResult Details(int id)
         {
             var result = from u in db.user
                          join ua in db.userToaddress on
@@ -42,6 +42,27 @@ namespace EF.Controllers
 
                          };
             return View(result);
+        }
+        public ActionResult Edit(int id)
+        {
+            user model = db.user.FirstOrDefault(x=>x.userId==id);
+            ViewBag.roles = new SelectList(db.Role.ToList(),"roleId","roleName",model.roleId);
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(user user)
+        {
+            if(ModelState.IsValid)
+            {
+                user model = db.user.FirstOrDefault(x=>x.userId==user.userId);
+                model.isMailVerified = user.isMailVerified;
+                model.isActive = user.isActive;
+                model.roleId = user.roleId;
+               // db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
     }
 }

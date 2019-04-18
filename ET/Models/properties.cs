@@ -21,12 +21,12 @@ namespace ET.Models
         }
     
         public int propertyId { get; set; }
-        public Nullable<int> productId { get; set; }
+        public Nullable<int> categoryId { get; set; }
         public string propertyName { get; set; }
         public string propertyType { get; set; }
     
+        public virtual category category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<propertyValues> propertyValues { get; set; }
-        public virtual product product { get; set; }
     }
 }

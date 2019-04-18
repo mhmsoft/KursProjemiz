@@ -4,19 +4,19 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+
 @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>product</h4>
+    <h4>Yeni Ürün Ekleme Formu</h4>
     <hr />
 
 
     <div class="form-group">
-        @Html.LabelFor(model => model.category.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.Label("Kategori", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
             <select class="form-control" name="categoryId" id="categoryId" onchange="getsubCategories()">
                 <option  value="0" selected>Bir Kategori seçin</option>
 
@@ -30,8 +30,8 @@
         </div>
     </div>
     <div class="form-group"id="subCat">
-        @Html.LabelFor(model => model.category.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.Label("Alt Kategori", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
             <select class="form-control" name="subCategoryId" id="subCategoryId" onchange="getProperties()">
                 <option selected>Bir Alt Kategori seçin</option>
 
@@ -41,8 +41,8 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.product.brandId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.Label("Marka", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
             <select class="form-control" name="brandId">
                 <option selected>Bir Kategori seçin</option>
 
@@ -59,8 +59,8 @@
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(model => model.product.productName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.Label("Ürün Adı", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
             @Html.EditorFor(model => model.product.productName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.product.productName, "", new { @class = "text-danger" })
         </div>
@@ -68,24 +68,24 @@
 
 
     <div class="form-group">
-        @Html.LabelFor(model => model.product.stock, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.Label("Stok", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
             @Html.EditorFor(model => model.product.stock, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.product.stock, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.product.price, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.Label("Fiyat", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
             @Html.EditorFor(model => model.product.price, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.product.price, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.product.productDesc, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.Label("Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
             @Html.EditorFor(model => model.product.productDesc, new { htmlAttributes = new { @class = "form-control",id= "productDesc" } })
             @Html.ValidationMessageFor(model => model.product.productDesc, "", new { @class = "text-danger" })
             
@@ -94,8 +94,8 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.product.discount, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.Label("İndirim Oranı", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
             @Html.EditorFor(model => model.product.discount, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.product.discount, "", new { @class = "text-danger" })
         </div>
@@ -104,7 +104,7 @@
 
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.product.images, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Resim Ekle", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <input type="file" name="img" multiple="multiple" />
             @Html.ValidationMessageFor(model => model.product.images, "", new { @class = "text-danger" })
@@ -113,14 +113,14 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Kaydet" class="btn btn-default" />
         </div>
     </div>
 </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Listeye Dön", "Index")
 </div>
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
@@ -137,7 +137,7 @@
                 success: function (response) {
                     if (response != 0) {
                         $.each(response, function (i, data) {
-                            $("div#properties").append('<div class="form-group"><label class="control-label col-md-2">' + data.propertyName + '</label><div class="col-md-10"><input type="text" id="propertyValues[' + i + '].propertyId" name="propertyValues[' + i + '].propertyId" value="' + data.propertyId + '" /><input type="' + data.propertyType + '" class="form-control" name="propertyValues[' + i + '].ValueName" id="propertyValues[' + i + '].ValueName" /></div></div>');
+                            $("div#properties").append('<div class="form-group"><label class="control-label col-md-2">' + data.propertyName + '</label><div class="col-md-10"><input type="hidden" id="propertyValues[' + i + '].propertyId" name="propertyValues[' + i + '].propertyId" value="' + data.propertyId + '" /><input type="' + data.propertyType + '" class="form-control" name="propertyValues[' + i + '].ValueName" id="propertyValues[' + i + '].ValueName" /></div></div>');
                         });
                     }
                     else
@@ -176,7 +176,7 @@
                 success: function (response) {
                     if (response != 0) {
                         $.each(response, function (i, data) {
-                            $("div#properties").append('<div class="form-group"><label class="control-label col-md-2">' + data.propertyName + '</label><div class="col-md-10"><input type="text" id="propertyValues[' + i + '].propertyId" name="propertyValues[' + i + '].propertyId" value="' + data.propertyId + '" /><input type="' + data.propertyType + '" class="form-control" name="propertyValues[' + i + '].ValueName" id="propertyValues[' + i + '].ValueName" /></div></div>');
+                            $("div#properties").append('<div class="form-group"><label class="control-label col-md-2">' + data.propertyName + '</label><div class="col-md-8"><input type="hidden" id="propertyValues[' + i + '].propertyId" name="propertyValues[' + i + '].propertyId" value="' + data.propertyId + '" /><input type="' + data.propertyType + '" class="form-control" name="propertyValues[' + i + '].ValueName" id="propertyValues[' + i + '].ValueName" /></div></div>');
                         });
                     }
                     else

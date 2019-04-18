@@ -4,24 +4,24 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h4 style="text-align:center">Ürünler</h4>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Yeni Ürün", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.productName)
+            @Html.DisplayName("Ürün")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.category.categoryName)
+            @Html.DisplayName("Kategori")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.stock)
+            @Html.DisplayName("Stok")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.price)
+            @Html.DisplayName("Fiyat")
         </th>
        
         <th></th>
@@ -44,9 +44,9 @@
        
         <td>
            
-            @Html.ActionLink("Edit", "Edit", new { id=item.productId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.productId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.productId })
+            @Html.ActionLink("Değiştir", "Edit", new { id=item.productId }) |
+            @Html.ActionLink("Detay", "Details", new { id=item.productId }) |
+            @Html.ActionLink("Sil", "Delete", new { id=item.productId })
         </td>
     </tr>
 }

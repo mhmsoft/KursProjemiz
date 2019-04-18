@@ -19,7 +19,7 @@ namespace EF.Models
         public string ValueName { get; set; }
         public Nullable<int> productId { get; set; }
     
-        public virtual properties properties { get; set; }
         public virtual product product { get; set; }
+        public virtual properties properties { get; set; }
     }
 }

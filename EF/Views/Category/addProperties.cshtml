@@ -12,13 +12,12 @@
        new SelectListItem { Text = "Radio", Value = "Radio" });
     listItems.Add(
     new SelectListItem { Text = "Check", Value = "Check" });
-    listItems.Add(
-        new SelectListItem { Text = "Select", Value = "Select" });
+    
     }
 
 
 
-<h2>@Model.category.categoryName</h2>
+<h4>@(Model.category.categoryName) Özellik Ekleme Formu</h4>
 
 @using (Html.BeginForm("addProperties","Category",FormMethod.Post,new {@id="myform" }))
 {
@@ -28,25 +27,25 @@
        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(x=>x.category.categoryId);
+        @Html.HiddenFor(x=>x.category.categoryId)
         <div class="form-group">
-            @Html.LabelFor(model => model.property.propertyName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.Label("Özellik", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
                 @Html.EditorFor(model => model.property.propertyName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.property.propertyName, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.property.propertyType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.property.propertyType, new SelectList(listItems, "Value", "Text"), htmlAttributes: new { @class = "form-control", @onchange = "getsubCategories()", id = "categoryId" })
+            @Html.Label("Tip", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.DropDownListFor(model => model.property.propertyType, new SelectList(listItems, "Value", "Text"), htmlAttributes: new { @class = "form-control"})
                 @Html.ValidationMessageFor(model => model.property.propertyType, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Kaydet" class="btn btn-default" />
             </div>
         </div>
     </div>

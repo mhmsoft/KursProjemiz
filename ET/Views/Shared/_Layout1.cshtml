@@ -164,11 +164,11 @@
                         </div><!--/price-range-->
                         
                         
-                        <input type="text" name="amount-min" id="amount-min" />
-                        <input type="text" name="amount-max" id="amount-max" />
+                        <input type="hidden" name="amount-min" id="amount-min" />
+                        <input type="hidden" name="amount-max" id="amount-max" />
                         <div class="shipping text-center">
                             <!--shipping-->
-                            <img src="images/home/shipping.jpg" alt="" />
+                            <img src="~/Content/images/home/shipping.jpg" alt="" />
                         </div><!--/shipping-->
 
                     </div>
@@ -358,5 +358,16 @@
     <script src="~/Content/js/price-range.js"></script>
     <script src="~/Content/js/jquery.prettyPhoto.js"></script>
     <script src="~/Content/js/main.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            // navigation menü  class
+            $('ul.nav li a').removeClass('active');
+                $('ul.nav li a[href^="/Default/' + location.pathname.split("/")[2] + '"]').addClass('active');
+
+                });
+
+    </script>
 </body>
 </html>

@@ -18,7 +18,7 @@ namespace ET.Models
         public Nullable<int> productId { get; set; }
         public Nullable<int> userId { get; set; }
     
-        public virtual user user { get; set; }
         public virtual product product { get; set; }
+        public virtual user user { get; set; }
     }
 }

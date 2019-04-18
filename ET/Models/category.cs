@@ -18,6 +18,7 @@ namespace ET.Models
         public category()
         {
             this.product = new HashSet<product>();
+            this.properties = new HashSet<properties>();
         }
     
         public int categoryId { get; set; }
@@ -27,5 +28,7 @@ namespace ET.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<product> product { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<properties> properties { get; set; }
     }
 }

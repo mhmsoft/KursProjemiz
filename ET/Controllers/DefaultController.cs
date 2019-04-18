@@ -40,7 +40,7 @@ namespace ET.Controllers
 
             var query = from p in db.product
                         join b in db.brand
-   on p.brandId equals b.brandId
+   on p.brandId equals b.brandId 
                         group new { b, p } by new { b.brandName, b.brandId } into g
                         select new Product2Brand
                         {
@@ -371,7 +371,7 @@ namespace ET.Controllers
                 SendOrderInfo(availableUser.Email);
                 message = " Sipariş işlemi tamamlandı. siparişiniz ile ilgili bilgi mailinize gönderilmiştir. <br/>" +
                   "Ecommerce sayfanızda sipariş detaylarını görebilirisiniz. Detay için aşağıdaki linke tıklayınız" +
-                      " <br/><br/><a href='/Account/MyOrders'></a> ";
+                      "<a href='/Account/MyOrders'></a> ";
 
             }
             return Content(message);

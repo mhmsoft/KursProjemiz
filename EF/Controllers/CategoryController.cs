@@ -109,7 +109,38 @@ namespace EF.Controllers
             return RedirectToAction("Index");
 
         }
+        public ActionResult editProperties(int id)
+        {
+            properties model = db.properties.Where(p=>p.propertyId==id).FirstOrDefault();
+            return View(model);  
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult editProperties(properties model)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(model).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("properties",new {id=model.categoryId});
 
+        }
+        public ActionResult deleteProperties(int id)
+        {
+            properties model = db.properties.Where(p => p.propertyId == id).FirstOrDefault();
+            return View(model);
+        }
+        
+        [HttpPost,ActionName("deleteProperties")]
+        [ValidateAntiForgeryToken]
+        public ActionResult deleteProperty(int id)
+        {
+            properties model = db.properties.Where(p => p.propertyId == id).FirstOrDefault();
+            db.properties.Remove(model);
+            db.SaveChanges();
+            return RedirectToAction("properties", new { id = model.categoryId });
+        }
         public ActionResult getProperties(int Id)
         {
             db.Configuration.ProxyCreationEnabled = false;

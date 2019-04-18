@@ -1,0 +1,56 @@
+﻿@model EF.Models.properties
+
+@{
+    ViewBag.Title = "editProperties";
+}
+@{
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(
+        new SelectListItem { Text = "Text", Value = "Text", Selected = true });
+    listItems.Add(
+       new SelectListItem { Text = "Radio", Value = "Radio" });
+    listItems.Add(
+    new SelectListItem { Text = "Check", Value = "Check" });
+    listItems.Add(
+        new SelectListItem { Text = "Select", Value = "Select" });
+}
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4 style="text-align:center"> @Model.category.categoryName  özellik Düzeltme Formu</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.propertyId)
+        @Html.HiddenFor(model=>model.categoryId)
+        <div class="form-group">
+            @Html.Label("Özellik", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.propertyName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.propertyName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Tip", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.DropDownListFor(model => model.propertyType, new SelectList(listItems, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.propertyType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Değiştir" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Listeye Dön", "properties",new {id=Model.categoryId })
+</div>

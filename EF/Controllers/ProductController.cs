@@ -174,7 +174,20 @@ namespace EF.Controllers
         [HttpPost]
         public ActionResult Delete(int id,int? c)
         {
-            product model= db.product.Where(a => a.productId ==id).FirstOrDefault();
+            // remove From  wishlist table
+            wishlist WishProducts = db.wishlist.Where(a => a.productId == id).FirstOrDefault();
+            if(WishProducts!=null)
+            db.wishlist.Remove(WishProducts);
+            db.SaveChanges();
+            // remove From Images table
+            List<images> productImages= db.images.Where(a => a.productId == id).ToList();
+            foreach (var item in productImages)
+            {
+                db.images.Remove(item);
+                db.SaveChanges();
+            }
+            // remove from product table
+            product model = db.product.Where(a => a.productId == id).FirstOrDefault();
             db.product.Remove(model);
             db.SaveChanges();
             return RedirectToAction("Index");

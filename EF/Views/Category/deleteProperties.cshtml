@@ -1,0 +1,48 @@
+﻿@model EF.Models.properties
+
+@{
+    ViewBag.Title = "deleteProperties";
+}
+
+<h2>@Model.category.categoryName ait özellik silme</h2>
+
+<h3>Silmek istediğinizden emin misiniz?</h3>
+<div>
+    <h4>properties</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Özellik")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.propertyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.propertyType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.propertyType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.category.categoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category.categoryName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

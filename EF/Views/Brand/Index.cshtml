@@ -5,18 +5,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h4>Markalar</h4>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Yeni Marka", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.brandName)
+            @Html.DisplayName("Marka")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.brandDesc)
+            @Html.DisplayName("Açıklama")
         </th>
         <th></th>
     </tr>
@@ -30,9 +30,9 @@
             @Html.DisplayFor(modelItem => item.brandDesc)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.brandId }) |
+            @Html.ActionLink("Değiştir", "Edit", new { id=item.brandId }) |
          
-            @Html.ActionLink("Delete", "Delete", new { id=item.brandId })
+            @Html.ActionLink("Sil", "Delete", new { id=item.brandId })
         </td>
     </tr>
 }

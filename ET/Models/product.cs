@@ -19,7 +19,7 @@ namespace ET.Models
         {
             this.images = new HashSet<images>();
             this.orderDetails = new HashSet<orderDetails>();
-            this.properties = new HashSet<properties>();
+            this.propertyValues = new HashSet<propertyValues>();
             this.wishlist = new HashSet<wishlist>();
         }
     
@@ -32,15 +32,15 @@ namespace ET.Models
         public Nullable<decimal> discount { get; set; }
         public string productDesc { get; set; }
     
+        public virtual brand brand { get; set; }
+        public virtual category category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<images> images { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<orderDetails> orderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<properties> properties { get; set; }
+        public virtual ICollection<propertyValues> propertyValues { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<wishlist> wishlist { get; set; }
-        public virtual brand brand { get; set; }
-        public virtual category category { get; set; }
     }
 }

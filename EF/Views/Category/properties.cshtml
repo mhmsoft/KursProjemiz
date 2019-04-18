@@ -3,18 +3,20 @@
 @{
     ViewBag.Title = "properties";
 }
-<h2></h2>
+<h4 style="text-align:center">@(Model.First(x=>x.categoryId==ViewBag.id).category.categoryName) Özellikleri</h4>
 
 <p>
-    @Html.ActionLink("Create New Properties", "addProperties",new { id=ViewBag.id})
+    @Html.ActionLink("Yeni Özellik Ekle", "addProperties",new { id=ViewBag.id})
+ |
+    @Html.ActionLink("Kategorilere Dön", "properties", new { id = ViewBag.id })
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.propertyName)
+            @Html.DisplayName("Özellik")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.propertyType)
+            @Html.DisplayName("Tip")
         </th>
         <th></th>
     </tr>
@@ -28,9 +30,9 @@
             @Html.DisplayFor(modelItem => item.propertyType)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new {  id=item.propertyId }) |
-            @Html.ActionLink("Details", "Details", new {  id=item.propertyId  }) |
-            @Html.ActionLink("Delete", "Delete", new {  id=item.propertyId  })
+            @Html.ActionLink("Değiştir", "editProperties", new {  id=item.propertyId }) |
+          
+            @Html.ActionLink("Sil", "DeleteProperties", new {  id=item.propertyId  })
         </td>
     </tr>
 }

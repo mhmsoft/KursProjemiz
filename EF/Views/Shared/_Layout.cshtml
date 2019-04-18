@@ -65,15 +65,16 @@
                 <div class="sidebar content-box" style="display: block;">
                     <ul class="nav">
                         <!-- Main menu -->
-                        <li class="current"><a href="Home/Index"><i class="glyphicon glyphicon-home"></i> Anasayfa</a></li>
-                        <li><a href="~/Member/Index"><i class="glyphicon glyphicon-user"></i> Üye</a></li>
-                        <li><a href="~/Slider/Index"><i class="glyphicon glyphicon-user"></i> Slider</a></li>
-                        <li><a href="~/Category/Index"><i class="glyphicon glyphicon-th"></i>Kategori</a></li>
-                        <li><a href="~/Product/Index"><i class="glyphicon glyphicon-tag"></i> Ürün </a></li>
-                        <li><a href="~/Brand/Index"><i class="glyphicon glyphicon-record"></i> Marka</a></li>
-
+                        <li class="current"><a href="/Member/Index"><i class="glyphicon glyphicon-home"></i> Anasayfa</a></li>
+                        <li><a href="/Member/Index"><i class="glyphicon glyphicon-user"></i> Üye</a></li>
+                        <li><a href="/Slider/Index"><i class="glyphicon glyphicon-user"></i> Slider</a></li>
+                        <li><a href="/Category/Index"><i class="glyphicon glyphicon-th"></i>Kategori</a></li>
+                        <li><a href="/Product/Index"><i class="glyphicon glyphicon-tag"></i> Ürün </a></li>
+                        <li><a href="/Brand/Index"><i class="glyphicon glyphicon-record"></i> Marka</a></li>
+       
 
                     </ul>
+                 
                 </div>
             </div>
             <div class="col-md-10">
@@ -92,15 +93,7 @@
             </div>
         </div>
     </div>
-    <footer>
-        <div class="container">
-
-            <div class="copy text-center">
-                Copyright 2014 <a href='#'>Website</a>
-            </div>
-
-        </div>
-    </footer>
+   
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -108,7 +101,16 @@
     <script src="~/Content/js/custom.js"></script>
     <script src="~/Content/js/editors.js"></script>
     <script src="~/Content/js/ckeditor.js"></script>
-
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // navigation menü  class
+            $('ul.nav li').removeClass('current');
+                $('ul.nav li a[href^="/' + location.pathname.split("/")[1] + '/Index"]').parent().addClass('current');
+                   
+                });
+            
+    </script>
 
 </body>
 </html>
