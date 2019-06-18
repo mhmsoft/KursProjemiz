@@ -37,7 +37,6 @@ namespace ET.Controllers
         }
         public PartialViewResult brands()
         {
-
             var query = from p in db.product
                         join b in db.brand
    on p.brandId equals b.brandId 

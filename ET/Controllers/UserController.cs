@@ -140,7 +140,7 @@ namespace ET.Controllers
             string message = "";
           
             var v = db.user.Where(a => a.Email == _login.Email).FirstOrDefault();
-            sayac = v.loginAttempt??0;
+            //sayac = v.loginAttempt??0;
             if (v != null)
             {
                 bool mailverify = v.isMailVerified ?? false;

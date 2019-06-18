@@ -108,10 +108,9 @@
                 @Html.Label(item.properties.propertyName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.HiddenFor(model => item.propertyId)
-                    <input type="text" value="@item.propertyId" name="propertyValues[@i].propertyId" id="propertyValues[@i].propertyId" />
+                    <input type="hidden" value="@item.propertyId" name="propertyValues[@i].propertyId" id="propertyValues[@i].propertyId" />
                     @Html.EditorFor(model => item.ValueName, new { htmlAttributes = new { @class = "form-control", @Name = string.Format("propertyValues[{0}].ValueName", i) } })
-                    <input type="text" value="@item.ValueName" name="propertyValues[@i].ValueName" id="propertyValues[@i].ValueName" />
-
+                     
                 </div>
             </div>
         }
